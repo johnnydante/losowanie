@@ -13,8 +13,12 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
-                    You are logged in!
+                    @if(Auth::user()->isAdmin())
+                        <form action="{{ route('shuffle') }}" method="get">
+                            <button type="submit" action="{{ route('shuffle') }}" class="btn btn-warning">Nowe tasowanie</button>
+                        </form>
+                    @endif
+                        <p>You are logged in!</p>
                 </div>
             </div>
         </div>
