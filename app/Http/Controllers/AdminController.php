@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use App\ShuffledPairs;
+use Illuminate\Support\Facades\Crypt;
 
 class AdminController extends Controller
 {
@@ -18,26 +22,53 @@ class AdminController extends Controller
             'Magdalena' => 'Dariusz',
             'Justyna' => 'Paweł',
             'Barbara' => 'Edward',
-            'Beata' => 'Zbigniew'
+            'Beata' => 'Zbigniew',
+            'Zdzisław' => 'Grażyna'
         ];
         $shufflePairs = [];
         $lostNames = [];
         for($i=0; $i<count($arrNames); $i++) {
-            $shufflePairs[$i] = [$arrNames[$i] => $this->getRandomName($arrNames, $arrNames[$i], $lostNames)];
-            $lostNames[] = $shufflePairs[$i][$arrNames[$i]];
+            do {
+                $chosenName = $this->getRandomName($arrNames);
+                $number = 0;
+                foreach($pairs as $name1 => $name2) {
+                    if([$chosenName => $arrNames[$i]] == [$name1 => $name2] || [$chosenName => $arrNames[$i]] == [$name2 => $name1]) {
+                        $number = 1;
+                        continue;
+                    }
+                }
+            } while($chosenName == $arrNames[$i] || in_array($chosenName,$lostNames) || $number == 1);
+
+            $shufflePairs[$arrNames[$i]] = $chosenName;
+            $lostNames[] = $shufflePairs[$arrNames[$i]];
         }
-        dd($shufflePairs, $lostNames);
 
+        try {
+            DB::beginTransaction();
+            ShuffledPairs::truncate();
+            foreach ($shufflePairs as $name1 => $name2) {
+                $hashName = Crypt::encryptString($name2);
+                DB::table('shuffled_pairs')->insert(['Osoba_kupująca' => $name1, 'Osoba_wylosowana' => $hashName]);
+            }
+            $users = $this->getUsers();
+            foreach ($users as $user) {
+                $user->hasTaken = 0;
+                $user->save();
+            }
+            DB::commit();
+            return redirect()->back()->with('success','Przetasowano pomyślnie');
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            Log::error($e->getTraceAsString());
+            DB::rollBack();
+        }
+        return redirect()->back()->with('danger','Wystąpił nieoczekiwany błąd. Spróbuj ponownie.');
 
-        return redirect()->back()->with('Przetasowano pomyślnie');
     }
 
-    public function getRandomName($arrNames, $name, $lostNames) {
+    public function getRandomName($arrNames) {
         $nameToBuy = $arrNames[rand(0, count($arrNames)-1)];
-        if($nameToBuy == $name || in_array($nameToBuy,$lostNames)) {
-            $this->getRandomName($arrNames, $name, $lostNames);
-        }
-        return $nameToBuy;
+            return $nameToBuy;
     }
 
     public function getUsers() {

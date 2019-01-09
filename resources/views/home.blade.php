@@ -15,10 +15,17 @@
                     @endif
                     @if(Auth::user()->isAdmin())
                         <form action="{{ route('shuffle') }}" method="get">
-                            <button type="submit" action="{{ route('shuffle') }}" class="btn btn-warning">Nowe tasowanie</button>
+                            <button type="submit" class="btn btn-outline-danger">Nowe tasowanie</button>
                         </form>
                     @endif
-                        <p>You are logged in!</p>
+
+                    @if(!Auth::user()->hasTaken())
+                        <form action="{{ route('getPair') }}" method="get">
+                            <button type="submit" class="btn btn-outline-success">Wylosuj dla mnie osobę</button>
+                        </form>
+                    @else
+                        <p>Osoba, którą wylosowałeś, to: <b>{{ Auth::user()->getMyPair() }}</b>! </p>
+                    @endif
                 </div>
             </div>
         </div>
