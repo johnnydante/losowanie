@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\ShuffledPairs;
 use Illuminate\Support\Facades\Crypt;
 use App\Suggestions;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -48,6 +49,17 @@ class User extends Authenticatable
         $myPair = Crypt::decryptString($hashPair);
         return $myPair;
     }
+	
+	public function getUserIdByName($name) {
+		$id = DB::table('users')->where('name', $name)->first()->id;
+		return $id;
+	}
+
+		public function getMyPairSuggestions() {
+		$myPair = $this->getMyPair();
+		$myPairSuggestions = DB::table('suggestions')->where('userId', $this->getUserIdByName($myPair))->first();
+		return $myPairSuggestions;
+	}
 
     public function getSuggestions() {
         return Suggestions::where('userId', Auth::user()->id)->first();

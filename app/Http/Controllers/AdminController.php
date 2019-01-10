@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\ShuffledPairs;
+use App\Suggestions;
 use Illuminate\Support\Facades\Crypt;
 
 class AdminController extends Controller
@@ -46,6 +46,7 @@ class AdminController extends Controller
         try {
             DB::beginTransaction();
             ShuffledPairs::truncate();
+            Suggestions::truncate();
             foreach ($shufflePairs as $name1 => $name2) {
                 $hashName = Crypt::encryptString($name2);
                 DB::table('shuffled_pairs')->insert(['Osoba_kupująca' => $name1, 'Osoba_wylosowana' => $hashName]);

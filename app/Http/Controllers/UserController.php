@@ -7,6 +7,8 @@ use App\Suggestions;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use App\Http\Requests\ChangePasswordRequest;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -51,4 +53,27 @@ class UserController extends Controller
         }
         return redirect()->route('home')->with('danger','Wystąpił nieoczekiwany błąd. Spróbuj ponownie.');
     }
+	
+	public function changeSuggestion($suggest) {
+		$user = Auth::user();
+		$oldSuggestion = DB::table('suggestions')->where('userId', $user->id)->first()->$suggest;
+		DB::table('suggestions')->where('userId', $user->id)->update([$suggest => null]);
+		return redirect()->route('home')->with('oldSuggestion', $oldSuggestion);
+	}
+	
+	public function changePasswordShow() {
+		return view('auth.changePassword');
+	}
+	
+	public function changePasswordPost(ChangePasswordRequest $request) {
+		$myPassword = Auth::user()->password;
+		if (Hash::check($request->get('oldPassword'), $myPassword)) {
+			$user = Auth::user();
+			$user->password = Hash::make($request->get('password'));
+			$user->save();
+		} else {
+			return redirect()->back()->with('danger', 'Stare hasło nie jest poprawne');
+		}
+		return redirect()->back()->with('success', 'Hasło zostało zmienione');
+	}
 }

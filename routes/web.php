@@ -24,5 +24,8 @@ Route::middleware(['auth'])->group(function() {
     });
     Route::get('getPair', 'UserController@getPair')->name('getPair');
     Route::post('suggest', 'UserController@postSuggestion')->name('postSuggestion');
+    Route::get('{suggest}/change', 'UserController@changeSuggestion')->name('changeOneSuggest');
+    Route::get('changePassword', 'UserController@changePasswordShow')->name('passwordChange');
+    Route::post('changePassword', 'UserController@changePasswordPost')->name('changePassword.post');
 });
 

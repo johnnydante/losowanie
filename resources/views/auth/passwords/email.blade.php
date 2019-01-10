@@ -33,9 +33,14 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary" style="display: block; margin-left: auto; margin-right: auto;">
                                     {{ __('Wyślij link do zresetowania hasła') }}
                                 </button>
+								<div class="row" style="margin-top: 20px;">
+									<a href="{{ route('home') }}" class="btn btn-outline-info" style="margin-left: auto; margin-right: auto;">
+										Powrót do logowania
+									</a>
+								</div>
                             </div>
                         </div>
                     </form>

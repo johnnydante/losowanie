@@ -19,6 +19,7 @@ class Suggestions extends Migration
             $table->string('first', 255)->nullable();
             $table->string('second', 255)->nullable();
             $table->string('third', 255)->nullable();
+			$table->timestamps();
         });
 
         Schema::table('suggestions', function (Blueprint $table) {
