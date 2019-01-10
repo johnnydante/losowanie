@@ -56,13 +56,13 @@ class AdminController extends Controller
                 $user->save();
             }
             DB::commit();
-            return redirect()->back()->with('success','Przetasowano pomyślnie');
+            return redirect()->route('home')->with('success','Przetasowano pomyślnie');
         } catch (\Exception $e) {
             Log::error($e->getMessage());
             Log::error($e->getTraceAsString());
             DB::rollBack();
         }
-        return redirect()->back()->with('danger','Wystąpił nieoczekiwany błąd. Spróbuj ponownie.');
+        return redirect()->route('home')->with('danger','Wystąpił nieoczekiwany błąd. Spróbuj ponownie.');
 
     }
 

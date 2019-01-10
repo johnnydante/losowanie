@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Auth;
 use App\ShuffledPairs;
 use Illuminate\Support\Facades\Crypt;
+use App\Suggestions;
 
 class User extends Authenticatable
 {
@@ -46,5 +47,59 @@ class User extends Authenticatable
         $hashPair = ShuffledPairs::where('Osoba_kupująca', Auth::user()->name)->first()->Osoba_wylosowana;
         $myPair = Crypt::decryptString($hashPair);
         return $myPair;
+    }
+
+    public function getSuggestions() {
+        return Suggestions::where('userId', Auth::user()->id)->first();
+    }
+
+    public function hasSuggestions() {
+        if($this->getSuggestions()) {
+            return true;
+        }
+        return false;
+    }
+
+    public function hasFirstSuggestions() {
+        if($this->getSuggestions()['first']) {
+            return true;
+        }
+        return false;
+    }
+
+    public function hasSecondSuggestions() {
+        if($this->getSuggestions()['second']) {
+            return true;
+        }
+        return false;
+    }
+
+    public function hasThirdSuggestions() {
+        if($this->getSuggestions()['third']) {
+            return true;
+        }
+        return false;
+    }
+
+    public function getMyFirstSuggestion() {
+        $first = $this->getSuggestions()['first'];
+        return $first;
+    }
+
+    public function getMySecondSuggestion() {
+        $second = $this->getSuggestions()['second'];
+        return $second;
+    }
+
+    public function getMyThirdSuggestion() {
+        $third = $this->getSuggestions()['third'];
+        return $third;
+    }
+
+    public function hasAllSuggestions() {
+        if($this->hasFirstSuggestions() && $this->hasSecondSuggestions() && $this->hasThirdSuggestions()) {
+            return true;
+        }
+        return false;
     }
 }

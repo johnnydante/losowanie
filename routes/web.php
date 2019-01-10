@@ -23,5 +23,6 @@ Route::middleware(['auth'])->group(function() {
         });
     });
     Route::get('getPair', 'UserController@getPair')->name('getPair');
+    Route::post('suggest', 'UserController@postSuggestion')->name('postSuggestion');
 });
 
