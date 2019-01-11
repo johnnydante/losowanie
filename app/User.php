@@ -44,6 +44,14 @@ class User extends Authenticatable
         return false;
     }
 
+    public function canTakeName() {
+        $shuffledPairs = ShuffledPairs::all();
+        if(count($shuffledPairs) > 0) {
+            return true;
+        }
+        return false;
+    }
+
     public function getMyPair() {
         $hashPair = ShuffledPairs::where('Osoba_kupująca', Auth::user()->name)->first()->Osoba_wylosowana;
         $myPair = Crypt::decryptString($hashPair);

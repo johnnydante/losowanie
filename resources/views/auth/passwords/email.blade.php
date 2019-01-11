@@ -5,7 +5,12 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Reset hasła') }}</div>
+                <div class="card-header">
+                    <h5 style="float: left; margin-top: 10px;" >{{ __('Reset hasła') }}</h5>
+                        <a href="{{ route('home') }}" class="btn btn-outline-info" style="float: right;">
+                            Powrót do logowania
+                        </a>
+                </div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -34,13 +39,8 @@
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary" style="display: block; margin-left: auto; margin-right: auto;">
-                                    {{ __('Wyślij link do zresetowania hasła') }}
+                                    {{ __('Wyślij link do resetu hasła') }}
                                 </button>
-								<div class="row" style="margin-top: 20px;">
-									<a href="{{ route('home') }}" class="btn btn-outline-info" style="margin-left: auto; margin-right: auto;">
-										Powrót do logowania
-									</a>
-								</div>
                             </div>
                         </div>
                     </form>

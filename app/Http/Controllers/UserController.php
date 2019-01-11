@@ -36,17 +36,31 @@ class UserController extends Controller
                         $suggestions->save();
                     }
                     if(!Auth::user()->hasSecondSuggestions()) {
-                        $suggestions->second = $request->get('second');
-                        $suggestions->save();
+                        if(!Auth::user()->hasFirstSuggestions()) {
+                            $suggestions->first = $request->get('second');
+                            $suggestions->save();
+                        } else {
+                            $suggestions->second = $request->get('second');
+                            $suggestions->save();
+                        }
+
                     }
                     if(!Auth::user()->hasThirdSuggestions()) {
-                        $suggestions->third = $request->get('third');
-                        $suggestions->save();
+                        if(!Auth::user()->hasFirstSuggestions()) {
+                            $suggestions->first = $request->get('third');
+                            $suggestions->save();
+                        } elseif(!Auth::user()->hasSecondSuggestions()) {
+                            $suggestions->second = $request->get('third');
+                            $suggestions->save();
+                        } else {
+                            $suggestions->third = $request->get('third');
+                            $suggestions->save();
+                        }
                     }
                 }
             DB::commit();
             return redirect()->route('home');
-        } catch (\Exceptio $e) {
+        } catch (\Exception $e) {
             Log::error($e->getMessage());
             Log::error($e->getTraceAsString());
             DB::rollBack();
@@ -58,6 +72,26 @@ class UserController extends Controller
 		$user = Auth::user();
 		$oldSuggestion = DB::table('suggestions')->where('userId', $user->id)->first()->$suggest;
 		DB::table('suggestions')->where('userId', $user->id)->update([$suggest => null]);
+		if(!Auth::user()->hasFirstSuggestions()) {
+            if(Auth::user()->hasSecondSuggestions()) {
+                DB::table('suggestions')->where('userId', $user->id)->update(['first' => $user->getMySecondSuggestion()]);
+                DB::table('suggestions')->where('userId', $user->id)->update(['second' => null]);
+                if(Auth::user()->hasThirdSuggestions()) {
+                    DB::table('suggestions')->where('userId', $user->id)->update(['second' => $user->getMyThirdSuggestion()]);
+                    DB::table('suggestions')->where('userId', $user->id)->update(['third' => null]);
+                }
+            } else {
+                if(Auth::user()->hasThirdSuggestions()) {
+                    DB::table('suggestions')->where('userId', $user->id)->update(['second' => $user->getMyThirdSuggestion()]);
+                    DB::table('suggestions')->where('userId', $user->id)->update(['third' => null]);
+                }
+            }
+        } else {
+            if(!Auth::user()->hasSecondSuggestions()) {
+                DB::table('suggestions')->where('userId', $user->id)->update(['second' => $user->getMyThirdSuggestion()]);
+                DB::table('suggestions')->where('userId', $user->id)->update(['third' => null]);
+            }
+        }
 		return redirect()->route('home')->with('oldSuggestion', $oldSuggestion);
 	}
 	

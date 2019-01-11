@@ -57,7 +57,7 @@ class AdminController extends Controller
                 $user->save();
             }
             DB::commit();
-            return redirect()->route('home')->with('success','Przetasowano pomyślnie');
+            return redirect()->route('home')->with('success','Pomyślnie przetasowano');
         } catch (\Exception $e) {
             Log::error($e->getMessage());
             Log::error($e->getTraceAsString());
@@ -74,5 +74,25 @@ class AdminController extends Controller
 
     public function getUsers() {
         return User::all();
+    }
+
+    public function delete() {
+        try {
+            DB::beginTransaction();
+            ShuffledPairs::truncate();
+            Suggestions::truncate();
+            $users = $this->getUsers();
+            foreach ($users as $user) {
+                $user->hasTaken = 0;
+                $user->save();
+            }
+            DB::commit();
+            return redirect()->route('home')->with('success','Pomyślnie wszystko usunięto');
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            Log::error($e->getTraceAsString());
+            DB::rollBack();
+        }
+        return redirect()->route('home')->with('danger','Wystąpił nieoczekiwany błąd. Spróbuj ponownie.');
     }
 }

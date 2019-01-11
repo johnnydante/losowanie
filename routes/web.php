@@ -20,6 +20,7 @@ Route::middleware(['auth'])->group(function() {
     Route::middleware(['auth.admin'])->group(function() {
         Route::group(['prefix'=>'admin'],function() {
             Route::get('shuffle', 'AdminController@shuffle')->name('shuffle');
+            Route::get('delete', 'AdminController@delete')->name('delete');
         });
     });
     Route::get('getPair', 'UserController@getPair')->name('getPair');
