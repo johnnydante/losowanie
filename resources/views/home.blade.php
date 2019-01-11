@@ -13,7 +13,7 @@
 								@else
 									wylosowałeś,
 								@endif
-								 to: <b><i>{{ Auth::user()->getMyPair() }}</i></b> </h3>
+								 to: <b>{{ Auth::user()->getMyPair() }}</b> </h3>
 						<div>
 							@if(Auth::user()->getMyPairSuggestions())
 								<h4 style="margin-top: 40px;">Podpowiedzi prezentów, które
