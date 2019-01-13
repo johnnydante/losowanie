@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\Invitation;
 use App\Mail\Zaproszenie;
 use App\User;
 use Illuminate\Support\Facades\DB;
