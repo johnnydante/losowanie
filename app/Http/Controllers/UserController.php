@@ -22,40 +22,36 @@ class UserController extends Controller
     public function postSuggestion(SuggestionRequest $request) {
         try {
             DB::beginTransaction();
-                if(!Auth::user()->hasSuggestions()) {
+                if(!Suggestions::where('userId', Auth::user()->id)->first()) {
                     DB::table('suggestions')->insert([
-                        'userId' => Auth::user()->id,
-                        'first' => $request->get('first'),
-                        'second' => $request->get('second'),
-                        'third' => $request->get('third'),
+                        'userId' => Auth::user()->id
                     ]);
-                } else {
-                    $suggestions = Suggestions::where('userId', Auth::user()->id)->first();
+                }
+                $suggestions = Suggestions::where('userId', Auth::user()->id)->first();
+                if(!Auth::user()->hasFirstSuggestions()) {
+                    $suggestions->first = $request->get('first');
+                    $suggestions->save();
+                }
+                if(!Auth::user()->hasSecondSuggestions()) {
                     if(!Auth::user()->hasFirstSuggestions()) {
-                        $suggestions->first = $request->get('first');
+                        $suggestions->first = $request->get('second');
+                        $suggestions->save();
+                    } else {
+                        $suggestions->second = $request->get('second');
                         $suggestions->save();
                     }
-                    if(!Auth::user()->hasSecondSuggestions()) {
-                        if(!Auth::user()->hasFirstSuggestions()) {
-                            $suggestions->first = $request->get('second');
-                            $suggestions->save();
-                        } else {
-                            $suggestions->second = $request->get('second');
-                            $suggestions->save();
-                        }
 
-                    }
-                    if(!Auth::user()->hasThirdSuggestions()) {
-                        if(!Auth::user()->hasFirstSuggestions()) {
-                            $suggestions->first = $request->get('third');
-                            $suggestions->save();
-                        } elseif(!Auth::user()->hasSecondSuggestions()) {
-                            $suggestions->second = $request->get('third');
-                            $suggestions->save();
-                        } else {
-                            $suggestions->third = $request->get('third');
-                            $suggestions->save();
-                        }
+                }
+                if(!Auth::user()->hasThirdSuggestions()) {
+                    if(!Auth::user()->hasFirstSuggestions()) {
+                        $suggestions->first = $request->get('third');
+                        $suggestions->save();
+                    } elseif(!Auth::user()->hasSecondSuggestions()) {
+                        $suggestions->second = $request->get('third');
+                        $suggestions->save();
+                    } else {
+                        $suggestions->third = $request->get('third');
+                        $suggestions->save();
                     }
                 }
             DB::commit();

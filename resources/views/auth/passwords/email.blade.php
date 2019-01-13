@@ -8,7 +8,7 @@
                 <div class="card-header">
                     <h5 style="float: left; margin-top: 10px;" >{{ __('Reset hasła') }}</h5>
                         <a href="{{ route('home') }}" class="btn btn-outline-info" style="float: right;">
-                            Powrót do logowania
+                            Powrót
                         </a>
                 </div>
 

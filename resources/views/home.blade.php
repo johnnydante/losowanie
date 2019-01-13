@@ -116,7 +116,7 @@
 										<label for="third" ></label>
 										<div class="col-md-6">
 											<input type="text" class="form-control{{ $errors->has('third') ? ' is-invalid' : '' }}" value="{{ old('third') }}"
-														 placeholder="Wpisz trzecią podpowiedzź" id="third" name="third">
+														 placeholder="Wpisz trzecią podpowiedź" id="third" name="third">
 										</div>
 										@if ($errors->has('third'))
 											<span class="invalid-feedback" role="alert">
