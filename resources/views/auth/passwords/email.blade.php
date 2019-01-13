@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
                     <h5 style="float: left; margin-top: 10px;" >{{ __('Reset hasła') }}</h5>
@@ -13,6 +13,7 @@
                 </div>
 
                 <div class="card-body">
+                    @include('flash-messages')
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
                             {{ session('status') }}

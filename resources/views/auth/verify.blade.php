@@ -8,6 +8,7 @@
                 <div class="card-header">{{ __('Potwierdź swój adres e-mail') }}</div>
 
                 <div class="card-body">
+                    @include('flash-messages')
                     @if (session('resent'))
                         <div class="alert alert-success" role="alert">
                             {{ __('Nowy link weryfikacyjny został wysłany na Twój e-mail.') }}

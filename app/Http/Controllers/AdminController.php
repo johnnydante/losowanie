@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\Invitation;
+use App\Mail\Zaproszenie;
 use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\ShuffledPairs;
 use App\Suggestions;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Mail;
 
 class AdminController extends Controller
 {
@@ -94,5 +97,14 @@ class AdminController extends Controller
             DB::rollBack();
         }
         return redirect()->route('home')->with('danger','Wystąpił nieoczekiwany błąd. Spróbuj ponownie.');
+    }
+
+    public function sendMailPairs() {
+        $users = $this->getUsers();
+        $url = 'https://' . $_SERVER['HTTP_HOST'];
+        foreach ($users as $user) {
+            Mail::to($user->email)->send(new Zaproszenie($url));
+        }
+        return redirect()->route('home')->with('success','Pomyślnie wysłano maile');
     }
 }

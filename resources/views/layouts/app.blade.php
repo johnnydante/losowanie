@@ -18,6 +18,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/my.css') }}" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Signika+Negative" rel="stylesheet">
 </head>
 <body>
@@ -34,6 +35,9 @@
                                 <form action="{{ route('delete') }}" method="get" style="float: left; margin-left: 20px;">
                                     <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Czy napewno chcesz usunąć wszystkie pary?')">Usuń pary</button>
                                 </form>
+                            <form action="{{ route('sendMailPairs') }}" method="get" style="float: left; margin-left: 20px;">
+                                <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Czy napewno chcesz wysłać wszystkim użytkownikom e-mail z informacją o wyslosowanej osobie?')">Wyślij maile</button>
+                            </form>
                             @endif
 						@endif
 						<a class="btn btn-outline-dark" href="{{ route('logout') }}" style="float: right;"
@@ -50,32 +54,11 @@
             </div>
         </nav>
 
-        <main class="py-4">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-md-8">
-                        <div class="card">
-                            @auth
-                                <div class="card-header">
-                                    <h5 style="float: left; margin-top: 10px;">Witaj {{ Auth::user()->name }}</h5>
-                                    @if(URL::current() != 'http://losowanie.local/changePassword')
-                                        <form action="{{ route('passwordChange') }}" method="get">
-                                            <button type="submit" class="btn btn-outline-primary" style="float: right;">Zmień hasło</button>
-                                        </form>
-                                    @endif
-                                </div>
-                            @endauth
-                            <div class="card-body">
+        <div class="card-body">
 
-                                @include('flash-messages')
-                                @yield('content')
+            @yield('content')
 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </main>
+        </div>
     </div>
 </body>
 </html>
