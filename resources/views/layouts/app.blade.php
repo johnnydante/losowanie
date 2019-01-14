@@ -30,6 +30,7 @@
                 <div class="right" style="width: 100%;">
 					@auth
 						@if(Auth::user()->isAdmin())
+                        <a href="{{ route('home') }}"> <i class="fas fa-gift" style="float: left; margin-left: 20px; font-size: 32px; margin-right: 20px; color: green"></i></a>
 							<form action="{{ route('shuffle') }}" method="get" style="float: left;">
 								<button type="submit" class="btn btn-outline-danger" onclick="return confirm('Czy napewno chcesz wykonać nowe tasowanie?')">Nowe tasowanie</button>
 							</form>
@@ -54,8 +55,15 @@
 						</form>
                         @if(Auth::user()->isAdmin())
                             <form action="{{ route('users') }}" method="get" style="float: right; margin-right: 20px;">
-                                <button type="submit" class="btn btn-outline-primary" >Użytkownicy</button>
+                                <button type="submit" class="btn btn-outline-primary" >Uczestnicy losowania</button>
                             </form>
+                        @else
+                            <a href="{{ route('home') }}"> <i class="fas fa-gift" style="float: left; margin-left: 20px; font-size: 32px; margin-right: 20px; color: #258e4f"></i></a>
+                            @if(Auth::user()->canTakeName())
+                                <form action="{{ route('users') }}" method="get" style="float: left; margin-left: 0px;">
+                                    <button type="submit" class="btn btn-outline-success" >Uczestnicy losowania</button>
+                                </form>
+                            @endif
                         @endif
 					@endauth
                 </div>

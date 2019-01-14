@@ -19,7 +19,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::middleware(['auth'])->group(function() {
     Route::middleware(['auth.admin'])->group(function() {
         Route::group(['prefix'=>'admin'],function() {
-            Route::get('users', 'AdminController@users')->name('users');
             Route::get('addUser', 'AdminController@addUser')->name('addUser');
             Route::get('deleteUser/{id}', 'AdminController@deleteUser')->name('deleteUser');
             Route::get('shuffle', 'AdminController@shuffle')->name('shuffle');
@@ -27,6 +26,7 @@ Route::middleware(['auth'])->group(function() {
             Route::get('sendMailPairs', 'AdminController@sendMailPairs')->name('sendMailPairs');
         });
     });
+    Route::get('users', 'UserController@users')->name('users');
     Route::get('getPair', 'UserController@getPair')->name('getPair');
     Route::post('suggest', 'UserController@postSuggestion')->name('postSuggestion');
     Route::get('{suggest}/change', 'UserController@changeSuggestion')->name('changeOneSuggest');

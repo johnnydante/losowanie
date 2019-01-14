@@ -12,7 +12,7 @@ body {
 }
 
 #editUser {
-    color: forestgreen;
+    color: dodgerblue;
     cursor: pointer;
 }
 
@@ -34,4 +34,5 @@ body {
 .btn {
     font-weight: bold;
     border-style: none;
+    font-size: 15px;
 }

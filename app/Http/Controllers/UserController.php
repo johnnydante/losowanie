@@ -9,9 +9,14 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\ChangePasswordRequest;
 use Illuminate\Support\Facades\Hash;
+use App\User;
 
 class UserController extends Controller
 {
+    public function users() {
+        return view('admin.users')->with('users',User::all());
+    }
+
     public function getPair() {
         $user = Auth::user();
         $user->hasTaken = 1;
@@ -106,4 +111,6 @@ class UserController extends Controller
 		}
 		return redirect()->back()->with('success', 'Hasło zostało zmienione');
 	}
+
+
 }

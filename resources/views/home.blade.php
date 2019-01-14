@@ -20,9 +20,11 @@
 								@include('flash-messages')
 								@if(Auth::user()->canTakeName())
 									@if(!Auth::user()->hasTaken())
+										<div style="text-align: center;">
 										<form action="{{ route('getPair') }}" method="get">
-											<button type="submit" class="btn btn-success">Wylosuj dla mnie osobę</button>
+											<button type="submit" class="btn btn-success" >Wylosuj dla mnie osobę</button>
 										</form>
+										</div>
 									@else
 											<h3>Osoba, którą
 												@if(substr(Auth::user()->name, -1) == 'a')
@@ -75,7 +77,7 @@
 														<div class="col-md-7">
 															<h5>
 
-																<p style="margin-top: 7px;float: left;">
+																<p style="margin-top: 22px;float: left;">
 																	<a href='{{ route('changeOneSuggest', ['suggest' => 'first']) }}'
 																	   class="btn btn-outline-danger" style="margin-right: 10px; float:left; border-style: none;"><i class="fas fa-times"></i></a>
 																	1) {{ Auth::user()->getMyFirstSuggestion() }}
@@ -163,7 +165,8 @@
 										</div>
 									@endif
 								@else
-									<h4 style="margin-top: 10px;">Dane do nowego losowania jeszcze nie są dostępne</h4>
+									<h2 style="margin-top: 10px; margin-bottom: 150px; text-align: center;">Dane do nowego losowania jeszcze nie są dostępne</h2>
+
 								@endif
 							</div>
 						@endauth
