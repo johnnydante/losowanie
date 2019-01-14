@@ -75,13 +75,12 @@
 												@if(Auth::user()->hasFirstSuggestions())
 													<div class="form-group row">
 														<div class="col-md-7">
-															<h5>
+															<h5 style="margin-top: 12px;float: left;">
 
-																<p style="margin-top: 22px;float: left;">
 																	<a href='{{ route('changeOneSuggest', ['suggest' => 'first']) }}'
-																	   class="btn btn-outline-danger" style="margin-right: 10px; float:left; border-style: none;"><i class="fas fa-times"></i></a>
+																	   class="btn btn-outline-danger" style="margin-top: -5px;margin-right: 10px; float:left; border-style: none;"><i class="fas fa-times"></i></a>
 																	1) {{ Auth::user()->getMyFirstSuggestion() }}
-																</p>
+
 															</h5>
 														</div>
 													</div>
@@ -102,13 +101,12 @@
 												@if(Auth::user()->hasSecondSuggestions())
 													<div class="form-group row">
 														<div class="col-md-9" >
-															<h5>
+															<h5 style="float: left; margin-top: -10px;">
 
-																<p style="float: left;">
 																	<a href='{{ route('changeOneSuggest', ['suggest' => 'second']) }}'
-																										   class="btn btn-outline-danger" style="margin-right: 10px; float:left; border-style: none;"><i class="fas fa-times"></i></a>
+																										   class="btn btn-outline-danger" style="margin-top: -5px;margin-right: 10px; float:left; border-style: none;"><i class="fas fa-times"></i></a>
 																	2) {{ Auth::user()->getMySecondSuggestion() }}
-																</p>
+
 															</h5>
 														</div>
 													</div>
@@ -129,13 +127,12 @@
 												@if(Auth::user()->hasThirdSuggestions())
 													<div class="form-group row">
 														<div class="col-md-9" >
-															<h5>
+															<h5 style="float: left; margin-top: -10px;">
 
-																<p style="float: left;">
 																	<a href='{{ route('changeOneSuggest', ['suggest' => 'third']) }}'
-																										   class="btn btn-outline-danger" style="margin-right: 10px; float:left; border-style: none;"><i class="fas fa-times"></i></a>
+																										   class="btn btn-outline-danger" style="margin-top: -5px;margin-right: 10px; float:left; border-style: none;"><i class="fas fa-times"></i></a>
 																	3) {{ Auth::user()->getMyThirdSuggestion() }}
-																</p>
+
 															</h5>
 														</div>
 													</div>

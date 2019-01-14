@@ -70,9 +70,9 @@
 													@endif
 												</td>
 												@if($user->hasTaken($user))
-													<td style="color: green"><b>TAK</b></td>
+													<td style="color: green; padding-left: 40px;"><b>TAK</b></td>
 												@else
-													<td style="color: darkred">NIE</td>
+													<td style="color: darkred; padding-left: 40px;">NIE</td>
 												@endif
 												@if(Auth::user()->isAdmin())
 													<td>
