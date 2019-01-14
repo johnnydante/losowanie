@@ -30,7 +30,7 @@
                 <div class="right" style="width: 100%;">
 					@auth
 						@if(Auth::user()->isAdmin())
-                        <a href="{{ route('home') }}"> <i class="fas fa-gift logo" style="float: left; margin-left: 20px; font-size: 32px; margin-right: 20px; color: green"></i></a>
+                        <a href="{{ route('home') }}"> <i class="fas fa-gift logo" style="float: left; margin-left: 20px; font-size: 32px; margin-right: 20px; color: #00bb4d"></i></a>
 							<form action="{{ route('shuffle') }}" method="get" style="float: left;">
 								<button type="submit" class="btn btn-outline-danger" onclick="return confirm('Czy napewno chcesz wykonać nowe tasowanie?')">Nowe tasowanie</button>
 							</form>
@@ -58,7 +58,7 @@
                                 <button type="submit" class="btn btn-outline-primary" >Uczestnicy losowania</button>
                             </form>
                         @else
-                            <a href="{{ route('home') }}"> <i class="fas fa-gift logo" style="float: left; margin-left: 20px; font-size: 32px; margin-right: 20px; color: #258e4f"></i></a>
+                            <a href="{{ route('home') }}"> <i class="fas fa-gift logo" style="float: left; margin-left: 20px; font-size: 32px; margin-right: 20px; color: #00bb4d"></i></a>
                             @if(Auth::user()->canTakeName())
                                 <form action="{{ route('users') }}" method="get" style="float: left; margin-left: 0px;">
                                     <button type="submit" class="btn btn-outline-success" >Uczestnicy losowania</button>
