@@ -7,20 +7,19 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class Zaproszenie extends Mailable
+class Invitation extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $url;
-
-    public function __construct($url)
+    public function __construct()
     {
-        $this->url = $url;
+
     }
 
     public function build()
     {
         return $this->from('losowanie.tendaj@gmail.com')
+                    ->subject('Zaproszenie')
                     ->markdown('emails.invitation');
     }
 }

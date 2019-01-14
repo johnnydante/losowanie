@@ -16,12 +16,12 @@
 								@endif
 							</div>
 
-							<div class="card-body">
+							<div class="card-body inner">
 								@include('flash-messages')
 								@if(Auth::user()->canTakeName())
 									@if(!Auth::user()->hasTaken())
 										<form action="{{ route('getPair') }}" method="get">
-											<button type="submit" class="btn btn-outline-success">Wylosuj dla mnie osobę</button>
+											<button type="submit" class="btn btn-success">Wylosuj dla mnie osobę</button>
 										</form>
 									@else
 											<h3>Osoba, którą
@@ -72,11 +72,14 @@
 											<form action="{{ route('postSuggestion') }}" method="post">
 												@if(Auth::user()->hasFirstSuggestions())
 													<div class="form-group row">
-														<div class="col-md-9">
+														<div class="col-md-7">
 															<h5>
-																<p style="margin-top: 7px;float: left;">1) {{ Auth::user()->getMyFirstSuggestion() }}</p>
-																<a href='{{ route('changeOneSuggest', ['suggest' => 'first']) }}'
-																   class="btn btn-outline-primary" style="margin-left: 10px; float:right;">Cofnij</a>
+
+																<p style="margin-top: 7px;float: left;">
+																	<a href='{{ route('changeOneSuggest', ['suggest' => 'first']) }}'
+																	   class="btn btn-outline-danger" style="margin-right: 10px; float:left; border-style: none;"><i class="fas fa-times"></i></a>
+																	1) {{ Auth::user()->getMyFirstSuggestion() }}
+																</p>
 															</h5>
 														</div>
 													</div>
@@ -98,9 +101,12 @@
 													<div class="form-group row">
 														<div class="col-md-9" >
 															<h5>
-																<p style="margin-top: 7px;float: left;">2) {{ Auth::user()->getMySecondSuggestion() }}</p>
-																<a href='{{ route('changeOneSuggest', ['suggest' => 'second']) }}'
-																   class="btn btn-outline-primary" style="margin-left: 10px; float: right;">Cofnij</a>
+
+																<p style="float: left;">
+																	<a href='{{ route('changeOneSuggest', ['suggest' => 'second']) }}'
+																										   class="btn btn-outline-danger" style="margin-right: 10px; float:left; border-style: none;"><i class="fas fa-times"></i></a>
+																	2) {{ Auth::user()->getMySecondSuggestion() }}
+																</p>
 															</h5>
 														</div>
 													</div>
@@ -122,9 +128,12 @@
 													<div class="form-group row">
 														<div class="col-md-9" >
 															<h5>
-																<p style="margin-top: 7px;float: left;">3) {{ Auth::user()->getMyThirdSuggestion() }}</p>
-																<a href='{{ route('changeOneSuggest', ['suggest' => 'third']) }}'
-																   class="btn btn-outline-primary" style="margin-left: 10px; float:right;">Cofnij</a>
+
+																<p style="float: left;">
+																	<a href='{{ route('changeOneSuggest', ['suggest' => 'third']) }}'
+																										   class="btn btn-outline-danger" style="margin-right: 10px; float:left; border-style: none;"><i class="fas fa-times"></i></a>
+																	3) {{ Auth::user()->getMyThirdSuggestion() }}
+																</p>
 															</h5>
 														</div>
 													</div>
@@ -145,7 +154,7 @@
 												@if(!Auth::user()->hasAllSuggestions())
 													<div class="form-group row">
 														<div class="col-md-9">
-															<button type="submit" class="btn btn-outline-success">Prześij podpowiedzi</button>
+															<button type="submit" class="btn btn-success">Prześij podpowiedzi</button>
 														</div>
 													</div>
 												@endif

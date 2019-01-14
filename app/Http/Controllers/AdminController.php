@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\Zaproszenie;
+use App\Mail\Invitation;
 use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -10,14 +10,22 @@ use App\ShuffledPairs;
 use App\Suggestions;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
 
 class AdminController extends Controller
 {
 
+    public function users() {
+        return view('admin.users')->with('users',User::all());
+    }
+
+    public function addUser() {
+        return route('register');
+    }
+
     public function shuffle() {
-        $users = $this->getUsers();
         $arrNames =[];
-        foreach($users as $user) {
+        foreach(User::all() as $user) {
             $arrNames[] = $user->name;
         }
         $pairs = [
@@ -53,14 +61,13 @@ class AdminController extends Controller
                 $hashName = Crypt::encryptString($name2);
                 DB::table('shuffled_pairs')->insert(['Osoba_kupująca' => $name1, 'Osoba_wylosowana' => $hashName]);
             }
-            $users = $this->getUsers();
-            foreach ($users as $user) {
+            foreach (User::all() as $user) {
                 $user->hasTaken = 0;
                 $user->save();
             }
             DB::commit();
             return redirect()->route('home')->with('success','Pomyślnie przetasowano');
-        } catch (\Exception $e) {
+        } catch (\Exceptio $e) {
             Log::error($e->getMessage());
             Log::error($e->getTraceAsString());
             DB::rollBack();
@@ -74,17 +81,12 @@ class AdminController extends Controller
             return $nameToBuy;
     }
 
-    public function getUsers() {
-        return User::all();
-    }
-
     public function delete() {
         try {
             DB::beginTransaction();
             ShuffledPairs::truncate();
             Suggestions::truncate();
-            $users = $this->getUsers();
-            foreach ($users as $user) {
+            foreach (User::all() as $user) {
                 $user->hasTaken = 0;
                 $user->save();
             }
@@ -98,11 +100,15 @@ class AdminController extends Controller
         return redirect()->route('home')->with('danger','Wystąpił nieoczekiwany błąd. Spróbuj ponownie.');
     }
 
+    public function deleteUser($id) {
+        $user = User::find($id);
+        $user->delete();
+        return redirect()->route('users')->with('success','Użytkownik został usunięty');
+    }
+
     public function sendMailPairs() {
-        $users = $this->getUsers();
-        $url = 'https://' . $_SERVER['HTTP_HOST'];
-        foreach ($users as $user) {
-            Mail::to($user->email)->send(new Zaproszenie($url));
+        foreach (User::all() as $user) {
+            Mail::to($user->email)->send(new Invitation());
         }
         return redirect()->route('home')->with('success','Pomyślnie wysłano maile');
     }

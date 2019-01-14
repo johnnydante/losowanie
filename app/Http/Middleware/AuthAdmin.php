@@ -12,9 +12,12 @@ class AuthAdmin
     ];
 
     public function handle($request, Closure $next) {
-        if(in_array(Auth::user()->roles, $this->arrRolesWithAccess)) {
-            return $next($request);
+        if(Auth::user()) {
+            if(in_array(Auth::user()->roles, $this->arrRolesWithAccess)) {
+                return $next($request);
+            }
+            return Auth::user()->redirectNoAccess();
         }
-        return Auth::user()->redirectNoAccess();
+        return route('home');
     }
 }

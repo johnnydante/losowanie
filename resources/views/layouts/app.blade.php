@@ -20,6 +20,8 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/my.css') }}" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Signika+Negative" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 </head>
 <body>
     <div id="app" >
@@ -36,9 +38,10 @@
                                     <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Czy napewno chcesz usunąć wszystkie pary?')">Usuń pary</button>
                                 </form>
                             <form action="{{ route('sendMailPairs') }}" method="get" style="float: left; margin-left: 20px;">
-                                <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Czy napewno chcesz wysłać wszystkim użytkownikom e-mail z informacją o wyslosowanej osobie?')">Wyślij maile</button>
+                                <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Czy napewno chcesz wysłać wszystkim użytkownikom e-mail z zaproszeniem do losowania?')">Wyślij maile</button>
                             </form>
                             @endif
+
 						@endif
 						<a class="btn btn-outline-dark" href="{{ route('logout') }}" style="float: right;"
 						   onclick="event.preventDefault();
@@ -48,7 +51,12 @@
 
 						<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
 							@csrf
-						</form> 
+						</form>
+                        @if(Auth::user()->isAdmin())
+                            <form action="{{ route('users') }}" method="get" style="float: right; margin-right: 20px;">
+                                <button type="submit" class="btn btn-outline-primary" >Użytkownicy</button>
+                            </form>
+                        @endif
 					@endauth
                 </div>
             </div>

@@ -41,8 +41,12 @@ class User extends Authenticatable
         );
     }
 
-    public function hasTaken() {
-        if(Auth::user()->hasTaken == 1) {
+    public function hasTaken($user = null) {
+        if($user) {
+            if($user->hasTaken == 1) {
+                return true;
+            }
+        } elseif(Auth::user()->hasTaken == 1) {
             return true;
         }
         return false;

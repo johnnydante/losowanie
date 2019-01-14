@@ -15,7 +15,7 @@
     </div>
 </div>
 
-@component('mail::button', ['url' => $url, 'color' => 'success'])
+@component('mail::button', ['url' => \URL::to('/'), 'color' => 'success'])
 Rodzinne losowanie
 @endcomponent
 

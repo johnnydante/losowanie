@@ -10,3 +10,28 @@ body {
 .card {
     opacity: 0.9;
 }
+
+#editUser {
+    color: forestgreen;
+    cursor: pointer;
+}
+
+#deleteUser {
+    color: red;
+    cursor: pointer;
+}
+
+.inner {
+    background-image: url('../images/main.jpg');
+    background-size: cover;
+}
+
+.inner-users {
+    background-image: url('../images/users.jpg');
+    background-size: cover;
+}
+
+.btn {
+    font-weight: bold;
+    border-style: none;
+}
