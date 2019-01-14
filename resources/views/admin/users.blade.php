@@ -42,12 +42,19 @@
 											@foreach($users as $user)
 												<tr>
 													@if(Auth::user()->isAdmin())
-														<th scope="row">{{ $user->id }}</th>
+														<th scope="row" class="tableId">{{ $user->id }}</th>
 													@else
 														<th scope="row"></th>
 													@endif
 													<td>{{ $user->name }}</td>
-													<td>{{ $user->email }}</td>
+													<td class="tableMail">
+                                                        {{ $user->email }}
+                                                        @if ($errors->has('third'))
+                                                            <span class="invalid-feedback" role="alert">
+																<strong>{{ $errors->first('third') }}</strong>
+															</span>
+                                                        @endif
+                                                    </td>
 													@if($user->hasTaken($user))
 														<td style="color: green"><b>TAK</b></td>
 													@else
@@ -55,10 +62,15 @@
 													@endif
 													@if(Auth::user()->isAdmin())
 														<td>
-															<span id="editUser"><i class="fas fa-edit"></i></span>
+                                                            <span class="editUser">
+                                                                <i class="fas fa-edit"></i>
+                                                            </span>
+                                                            <a href="{{ route('saveEditUser', ['id' => $user->id]) }}" class="saveEditUser">
+                                                                <i class="fas fa-save"></i>
+                                                            </a>
 															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 															<a onclick="return confirm('Czy napewno chcesz usunąć tego użytkownika?')"
-															   href="{{ route('deleteUser', ['id' => $user->id]) }}" id="deleteUser">
+															   href="{{ route('deleteUser', ['id' => $user->id]) }}" class="deleteUser">
 																<i class="fas fa-times"></i>
 															</a>
 														</td>
@@ -75,4 +87,26 @@
 			</div>
 		</div>
 	</main>
+<script>
+    $( document ).ready(function() {
+        $('.editUser').click(function () {
+            var $this = $(this);
+            console.log($this);
+            $('.editUser').hide();
+            $this.next('.saveEditUser').show();
+            var $mail = $this.parent().parent().find('.tableMail').innerHTML;
+            var $id = $this.parent().parent().find('.tableId').innerHTML;
+            $this.parent().parent().find('.tableMail').html('<form action="{{ route('saveEditUser', ['id' => $user->id]) }}" method="post">' +
+                '<div class="form-group row">\n' +
+                '\t\t\t\t\t\t\t\t\t\t\t\t\t\t<label for="mail" ></label>\n' +
+                '\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class="col-md-6">\n' +
+                '\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type="text" class="form-control{{ $errors->has('mail') ? 'is-invalid' : '' }}" value="{{ old('mail') }}"\n' +
+                '\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t value="' + $mail + '" id="mail" name="mail">\n' +
+                '\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n' +
+                '\t\t\t\t\t\t\t\t\t\t\t\t\t</div>' +
+                '</form>')
+        });
+    });
+</script>
 @endsection
+

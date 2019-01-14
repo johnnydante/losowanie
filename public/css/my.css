@@ -18,12 +18,12 @@ body {
     opacity: 0.9;
 }
 
-#editUser {
+.editUser {
     color: dodgerblue;
     cursor: pointer;
 }
 
-#deleteUser {
+.deleteUser {
     color: red;
     cursor: pointer;
 }
@@ -50,4 +50,8 @@ body {
 
 .logo:hover {
     opacity: 0.9;
+}
+
+.saveEditUser {
+    display: none;
 }

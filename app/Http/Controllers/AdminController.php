@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Mail\Invitation;
 use App\User;
 use Illuminate\Support\Facades\DB;
@@ -107,5 +108,9 @@ class AdminController extends Controller
             Mail::to($user->email)->send(new Invitation());
         }
         return redirect()->route('home')->with('success','Pomyślnie wysłano maile');
+    }
+
+    public function saveEditUser(Request $request) {
+        dd($request);
     }
 }
