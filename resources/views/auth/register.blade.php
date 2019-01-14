@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-header" ><h5 style="float: left; margin-top: 10px;">{{ __('Dodaj uczestnika losowania') }}</h5>
                     <form action="{{ route('users') }}" method="get">
-                        <button type="submit" class="btn btn-outline-primary" style="float: right;">Powrót</button>
+                        <button type="submit" class="btn btn-outline-primary" style="float: right; margin-top: 3px;">Powrót</button>
                     </form>
                 </div>
                 <div class="card-body inner">

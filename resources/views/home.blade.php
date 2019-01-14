@@ -11,7 +11,7 @@
 								<h5 style="float: left; margin-top: 10px;">Witaj {{ Auth::user()->name }}</h5>
 								@if(URL::current() != 'http://losowanie.local/changePassword')
 									<form action="{{ route('passwordChange') }}" method="get">
-										<button type="submit" class="btn btn-outline-primary" style="float: right;">Zmień hasło</button>
+										<button type="submit" class="btn btn-outline-primary" style="float: right; margin-top: 3px;">Zmień hasło</button>
 									</form>
 								@endif
 							</div>
@@ -165,7 +165,7 @@
 										</div>
 									@endif
 								@else
-									<h2 style="margin-top: 10px; margin-bottom: 150px; text-align: center;">Dane do nowego losowania jeszcze nie są dostępne</h2>
+									<h2 style="margin-top: 10px; margin-bottom: 120px; text-align: center;">Dane do nowego losowania jeszcze nie są dostępne</h2>
 
 								@endif
 							</div>

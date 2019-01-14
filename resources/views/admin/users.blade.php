@@ -10,11 +10,11 @@
 								<div class="card-header">
 									<h5 style="float: left; margin-top: 10px;">Użytkownicy</h5>
 										<form action="{{ route('home') }}" method="get">
-											<button type="submit" class="btn btn-outline-primary" style="float: right; margin-right: 10px;">Powrót</button>
+											<button type="submit" class="btn btn-outline-primary" style="float: right; margin-right: 10px; margin-top: 3px;">Powrót</button>
 										</form>
 									@if(Auth::user()->isAdmin())
 										<form action="{{ route('register') }}" method="get">
-											<button type="submit" class="btn btn-outline-success" style="float: right; margin-right: 20px;">Dodaj uczestnika</button>
+											<button type="submit" class="btn btn-outline-success" style="float: right; margin-right: 20px; margin-top: 3px;">Dodaj uczestnika</button>
 										</form>
 									@endif
 								</div>
