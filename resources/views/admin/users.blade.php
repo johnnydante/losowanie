@@ -7,80 +7,90 @@
 				<div class="col-md-8">
 					<div class="card">
 						@auth
-								<div class="card-header">
-									<h5 style="float: left; margin-top: 10px;">Użytkownicy</h5>
-										<form action="{{ route('home') }}" method="get">
-											<button type="submit" class="btn btn-outline-primary" style="float: right; margin-right: 10px; margin-top: 3px;">Powrót</button>
-										</form>
-									@if(Auth::user()->isAdmin())
-										<form action="{{ route('register') }}" method="get">
-											<button type="submit" class="btn btn-outline-success" style="float: right; margin-right: 20px; margin-top: 3px;">Dodaj uczestnika</button>
-										</form>
-									@endif
-								</div>
-
-								<div class="card-body inner-users">
-									@include('flash-messages')
-
-									<table class="table">
-										<thead>
+							<div class="card-header">
+								<h5 style="float: left; margin-top: 10px;">Użytkownicy</h5>
+									<form action="{{ route('home') }}" method="get">
+										<button type="submit" class="btn btn-outline-primary" style="float: right; margin-right: 10px; margin-top: 3px;">Powrót</button>
+									</form>
+								@if(Auth::user()->isAdmin())
+									<form action="{{ route('register') }}" method="get">
+										<button type="submit" class="btn btn-outline-success" style="float: right; margin-right: 20px; margin-top: 3px;">Dodaj uczestnika</button>
+									</form>
+								@endif
+							</div>
+							<div class="card-body inner-users">
+								@if ($errors->has('email'))
+									<span class="invalid-feedback" role="alert">
+										<strong>{{ $errors->first('email') }}</strong>
+									</span>
+								@endif
+								@include('flash-messages')
+								<table class="table">
+									<thead>
+										<tr>
+											@if(Auth::user()->isAdmin())
+												<th scope="col">ID</th>
+											@else
+												<th scope="col"></th>
+											@endif
+											<th scope="col">Imię</th>
+											<th scope="col">Email</th>
+											<th scope="col">Wylosował/a?</th>
+											@if(Auth::user()->isAdmin())
+												<th scope="col">Akcje</th>
+											@endif
+										</tr>
+									</thead>
+									<tbody>
+										@foreach($users as $user)
 											<tr>
 												@if(Auth::user()->isAdmin())
-													<th scope="col">ID</th>
+													<th scope="row" class="tableId">{{ $user->id }}</th>
 												@else
-													<th scope="col"></th>
+													<th scope="row"></th>
 												@endif
-												<th scope="col">Imię</th>
-												<th scope="col">Email</th>
-												<th scope="col">Wylosował/a?</th>
+												<td>{{ $user->name }}</td>
+												<td class="tableMail">
+													<span class="oldMail">{{ $user->email }}</span>
+													<form class="editUserForm" action="{{ route('saveEditUser', ['id' => $user->id]) }}" method="get">
+														<div class="form-group row">
+															<label for="email" ></label>
+															<div class="col-md-8">
+																<input type="text" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }} email" value="{{ $user->email }}"  name="email">
+															</div>
+															<button type="submit" class="saveEditUser btn" >
+																<i class="fas fa-save"></i>
+															</button>
+														</div>
+													</form>
+													@if ($errors->has('third'))
+														<span class="invalid-feedback" role="alert">
+															<strong>{{ $errors->first('third') }}</strong>
+														</span>
+													@endif
+												</td>
+												@if($user->hasTaken($user))
+													<td style="color: green"><b>TAK</b></td>
+												@else
+													<td style="color: darkred">NIE</td>
+												@endif
 												@if(Auth::user()->isAdmin())
-													<th scope="col">Akcje</th>
+													<td>
+														<span class="editUser">
+															<i class="fas fa-edit"></i>
+														</span>
+														&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+														<a onclick="return confirm('Czy napewno chcesz usunąć tego użytkownika?')"
+														   href="{{ route('deleteUser', ['id' => $user->id]) }}" class="deleteUser">
+															<i class="fas fa-times"></i>
+														</a>
+													</td>
 												@endif
 											</tr>
-										</thead>
-										<tbody>
-											@foreach($users as $user)
-												<tr>
-													@if(Auth::user()->isAdmin())
-														<th scope="row" class="tableId">{{ $user->id }}</th>
-													@else
-														<th scope="row"></th>
-													@endif
-													<td>{{ $user->name }}</td>
-													<td class="tableMail">
-                                                        {{ $user->email }}
-                                                        @if ($errors->has('third'))
-                                                            <span class="invalid-feedback" role="alert">
-																<strong>{{ $errors->first('third') }}</strong>
-															</span>
-                                                        @endif
-                                                    </td>
-													@if($user->hasTaken($user))
-														<td style="color: green"><b>TAK</b></td>
-													@else
-														<td style="color: darkred">NIE</td>
-													@endif
-													@if(Auth::user()->isAdmin())
-														<td>
-                                                            <span class="editUser">
-                                                                <i class="fas fa-edit"></i>
-                                                            </span>
-                                                            <a href="{{ route('saveEditUser', ['id' => $user->id]) }}" class="saveEditUser">
-                                                                <i class="fas fa-save"></i>
-                                                            </a>
-															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-															<a onclick="return confirm('Czy napewno chcesz usunąć tego użytkownika?')"
-															   href="{{ route('deleteUser', ['id' => $user->id]) }}" class="deleteUser">
-																<i class="fas fa-times"></i>
-															</a>
-														</td>
-													@endif
-												</tr>
-											@endforeach
-										</tbody>
-									</table>
-
-								</div>
+										@endforeach
+									</tbody>
+								</table>
+							</div>
 						@endauth
 					</div>
 				</div>
@@ -88,25 +98,21 @@
 		</div>
 	</main>
 <script>
+
     $( document ).ready(function() {
         $('.editUser').click(function () {
             var $this = $(this);
-            console.log($this);
+            var $mail = $this.parent().parent().find('.oldMail').innerHTML;
+            var $oldMail = $this.parent().parent().find('.oldMail');
+			var $form = $this.parent().parent().find('.editUserForm');
+			console.log($mail);
+            $form.show();
+            $oldMail.hide();
             $('.editUser').hide();
-            $this.next('.saveEditUser').show();
-            var $mail = $this.parent().parent().find('.tableMail').innerHTML;
-            var $id = $this.parent().parent().find('.tableId').innerHTML;
-            $this.parent().parent().find('.tableMail').html('<form action="{{ route('saveEditUser', ['id' => $user->id]) }}" method="post">' +
-                '<div class="form-group row">\n' +
-                '\t\t\t\t\t\t\t\t\t\t\t\t\t\t<label for="mail" ></label>\n' +
-                '\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class="col-md-6">\n' +
-                '\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type="text" class="form-control{{ $errors->has('mail') ? 'is-invalid' : '' }}" value="{{ old('mail') }}"\n' +
-                '\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t value="' + $mail + '" id="mail" name="mail">\n' +
-                '\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n' +
-                '\t\t\t\t\t\t\t\t\t\t\t\t\t</div>' +
-                '</form>')
+            $('.deleteUser').hide();
         });
     });
+
 </script>
 @endsection
 

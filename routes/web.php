@@ -13,6 +13,7 @@
 
 Auth::routes();
 
+Route::get('/home', 'HomeController@index');
 Route::get('/', 'HomeController@index')->name('home');
 
 Route::middleware(['auth'])->group(function() {
@@ -20,7 +21,7 @@ Route::middleware(['auth'])->group(function() {
         Route::group(['prefix'=>'admin'],function() {
             Route::get('addUser', 'AdminController@addUser')->name('addUser');
             Route::get('deleteUser/{id}', 'AdminController@deleteUser')->name('deleteUser');
-            Route::post('saveEditUser/{id}', 'AdminController@saveEditUser')->name('saveEditUser');
+            Route::get('saveEditUser/{id}', 'AdminController@saveEditUser')->name('saveEditUser');
             Route::get('shuffle', 'AdminController@shuffle')->name('shuffle');
             Route::get('delete', 'AdminController@delete')->name('delete');
             Route::get('sendMailPairs', 'AdminController@sendMailPairs')->name('sendMailPairs');

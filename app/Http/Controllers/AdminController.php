@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\ChangeMailRequest;
 use App\Mail\Invitation;
 use App\User;
 use Illuminate\Support\Facades\DB;
@@ -110,7 +110,8 @@ class AdminController extends Controller
         return redirect()->route('home')->with('success','Pomyślnie wysłano maile');
     }
 
-    public function saveEditUser(Request $request) {
-        dd($request);
+    public function saveEditUser(ChangeMailRequest $request, $id) {
+        User::find($id)->update(['email' => $request->get('email')]);
+        return redirect()->route('users')->with('success','Pomyślnie edytowano adres e-mail');
     }
 }
