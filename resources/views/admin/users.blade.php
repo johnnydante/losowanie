@@ -4,7 +4,7 @@
 	<main class="py-4">
 		<div class="container">
 			<div class="row justify-content-center">
-				<div class="col-md-8">
+				<div class="col-md-{{ Auth::user()->isAdmin() ? '8' : '6' }}">
 					<div class="card">
 						@auth
 							<div class="card-header">
@@ -34,11 +34,14 @@
 												<th scope="col"></th>
 											@endif
 											<th scope="col">Imię</th>
-											<th scope="col">Email</th>
+											@if(Auth::user()->isAdmin())
+												<th scope="col">Email</th>
+											@endif
 											<th scope="col">Wylosował/a?</th>
 											@if(Auth::user()->isAdmin())
 												<th scope="col">Akcje</th>
 											@endif
+
 										</tr>
 									</thead>
 									<tbody>
@@ -50,25 +53,27 @@
 													<th scope="row"></th>
 												@endif
 												<td>{{ $user->name }}</td>
-												<td class="tableMail">
-													<span class="oldMail">{{ $user->email }}</span>
-													<form class="editUserForm" action="{{ route('saveEditUser', ['id' => $user->id]) }}" method="get">
-														<div class="form-group row">
-															<label for="email" ></label>
-															<div class="col-md-8">
-																<input type="text" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }} email" value="{{ $user->email }}"  name="email">
+												@if(Auth::user()->isAdmin())
+													<td class="tableMail">
+														<span class="oldMail">{{ $user->email }}</span>
+														<form class="editUserForm" action="{{ route('saveEditUser', ['id' => $user->id]) }}" method="get">
+															<div class="form-group row">
+																<label for="email" ></label>
+																<div class="col-md-8">
+																	<input type="text" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }} email" value="{{ $user->email }}"  name="email">
+																</div>
+																<button type="submit" class="saveEditUser btn" >
+																	<i class="fas fa-save"></i>
+																</button>
 															</div>
-															<button type="submit" class="saveEditUser btn" >
-																<i class="fas fa-save"></i>
-															</button>
-														</div>
-													</form>
-													@if ($errors->has('third'))
-														<span class="invalid-feedback" role="alert">
-															<strong>{{ $errors->first('third') }}</strong>
-														</span>
-													@endif
-												</td>
+														</form>
+														@if ($errors->has('third'))
+															<span class="invalid-feedback" role="alert">
+														<strong>{{ $errors->first('third') }}</strong>
+													</span>
+														@endif
+													</td>
+												@endif
 												@if($user->hasTaken($user))
 													<td style="color: green; padding-left: 40px;"><b>TAK</b></td>
 												@else
