@@ -18,6 +18,6 @@ class AuthAdmin
             }
             return Auth::user()->redirectNoAccess();
         }
-        return route('home');
+        return redirect(route('home'));
     }
 }
