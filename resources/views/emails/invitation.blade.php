@@ -19,6 +19,8 @@
 Rodzinne losowanie
 @endcomponent
 
+
+
 Z pozdrowieniami,<br>
 {{ config('app.name') }}
 @endcomponent

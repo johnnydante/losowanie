@@ -88,7 +88,7 @@ class AdminController extends Controller
                 $user->save();
             }
             DB::commit();
-            return redirect()->route('home')->with('success','Pomyślnie wszystko usunięto');
+            return redirect()->route('home')->with('success','Pomyślnie zresetowano losowanie');
         } catch (\Exception $e) {
             Log::error($e->getMessage());
             Log::error($e->getTraceAsString());

@@ -43,10 +43,10 @@
 							</form>
                             @if(Auth::user()->canTakeName())
                                 <form action="{{ route('delete') }}" method="get" style="float: left; margin-left: 20px;">
-                                    <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Czy napewno chcesz usunąć wszystkie pary?')">Usuń pary</button>
+                                    <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Czy napewno chcesz zresetować losowanie?')">Resetuj losowanie</button>
                                 </form>
                             <form action="{{ route('sendMailPairs') }}" method="get" style="float: left; margin-left: 20px;">
-                                <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Czy napewno chcesz wysłać wszystkim użytkownikom e-mail z zaproszeniem do losowania?')">Wyślij maile</button>
+                                <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Czy napewno chcesz wysłać wszystkim użytkownikom e-mail z zaproszeniem do losowania?')">Wyślij zaproszenia</button>
                             </form>
                             @endif
 
