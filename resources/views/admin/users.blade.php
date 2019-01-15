@@ -41,7 +41,7 @@
 										</tr>
 									</thead>
 									<tbody>
-										@foreach($users as $user)
+										@foreach($users as $id => $user)
 											<tr>
 												@if(Auth::user()->isAdmin())
 													<th scope="row" class="tableId">{{ $user->id }}</th>
@@ -59,21 +59,16 @@
 																	<input type="text" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }} email" value="{{ $user->email }}"  name="email">
 																	<input type="hidden" value="{{ $user->id }}" name="userId">
 																</div>
-																@if ($errors->has('email'))
-																	<span class="invalid-feedback" role="alert">
-																		<strong>{{ $errors->first('email') }}</strong>
-																	</span>
-																@endif
+
 																<button type="submit" class="saveEditUser btn" >
 																	<i class="fas fa-save"></i>
 																</button>
+
 															</div>
 														</form>
-														@if ($errors->has('third'))
-															<span class="invalid-feedback" role="alert">
-														<strong>{{ $errors->first('third') }}</strong>
-													</span>
-														@endif
+														<span class="invalid-feedback users-span" id="alert-{{ $user->id }}">
+															<strong>{{ $errors->first('email') }}</strong>
+														</span>
 													</td>
 												@endif
 												@if($user->hasTaken($user))
@@ -104,7 +99,8 @@
 			</div>
 		</div>
 	</main>
-	<script>
+<script>
+
 
     $( document ).ready(function() {
         $('.editUser').click(function () {
@@ -119,11 +115,13 @@
             $('.deleteUser').hide();
         });
         @if($errors->has('email'))
-
+			var form = $('#{{ old('userId') }}');
         	form.show();
-//			oldMail.hide();
+        	var oldMail = form.parent().find('.oldMail');
+			oldMail.hide();
 			$('.editUser').hide();
 			$('.deleteUser').hide();
+			$('#alert-{{ old('userId') }}').show();
 		@endif
     });
 

@@ -68,3 +68,9 @@ body {
     margin-top: -7px;
     margin-left: -10px;
 }
+.users-span {
+    display: none;
+    position: relative;
+    top: 11px;
+    left: -7px;
+}
