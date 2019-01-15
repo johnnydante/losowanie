@@ -77,7 +77,7 @@
 														<div class="col-md-7">
 															<h5 style="margin-top: 12px;float: left;">
 
-																	<a href='{{ route('changeOneSuggest', ['suggest' => 'first']) }}' onclick="return confirm('Czy napewno chcesz usunąć tę podpowiedź?')" class="btn btn-outline-danger" style="margin-top: -5px;margin-right: 10px; float:left; border-style: none;"><i class="fas fa-times"></i></a>
+																	<a href='{{ route('changeOneSuggest', ['suggest' => 'first']) }}' onclick="return confirm('Czy napewno chcesz usunąć tę podpowiedź?')" class="btn btn-outline-danger" style="margin-top: -6px;margin-right: 10px; float:left; border-style: none;"><i class="fas fa-times"></i></a>
 																	1) {{ Auth::user()->getMyFirstSuggestion() }}
 
 															</h5>
@@ -102,7 +102,7 @@
 														<div class="col-md-9" >
 															<h5 style="float: left; margin-top: -10px;">
 
-																	<a href='{{ route('changeOneSuggest', ['suggest' => 'second']) }}' onclick="return confirm('Czy napewno chcesz usunąć tę podpowiedź?')" class="btn btn-outline-danger" style="margin-top: -5px;margin-right: 10px; float:left; border-style: none;"><i class="fas fa-times"></i></a>
+																	<a href='{{ route('changeOneSuggest', ['suggest' => 'second']) }}' onclick="return confirm('Czy napewno chcesz usunąć tę podpowiedź?')" class="btn btn-outline-danger" style="margin-top: -6px;margin-right: 10px; float:left; border-style: none;"><i class="fas fa-times"></i></a>
 																	2) {{ Auth::user()->getMySecondSuggestion() }}
 
 															</h5>
@@ -127,7 +127,7 @@
 														<div class="col-md-9" >
 															<h5 style="float: left; margin-top: -10px;">
 
-																	<a href='{{ route('changeOneSuggest', ['suggest' => 'third']) }}' onclick="return confirm('Czy napewno chcesz usunąć tę podpowiedź?')" class="btn btn-outline-danger" style="margin-top: -5px;margin-right: 10px; float:left; border-style: none;"><i class="fas fa-times"></i></a>
+																	<a href='{{ route('changeOneSuggest', ['suggest' => 'third']) }}' onclick="return confirm('Czy napewno chcesz usunąć tę podpowiedź?')" class="btn btn-outline-danger" style="margin-top: -6px;margin-right: 10px; float:left; border-style: none;"><i class="fas fa-times"></i></a>
 																	3) {{ Auth::user()->getMyThirdSuggestion() }}
 
 															</h5>
