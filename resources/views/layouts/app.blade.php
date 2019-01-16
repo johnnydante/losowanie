@@ -42,7 +42,7 @@
 								<button type="submit" class="btn btn-outline-danger" onclick="return confirm('Czy napewno chcesz wykonać nowe tasowanie?')">Nowe tasowanie</button>
 							</form>
                             @if(Auth::user()->canTakeName())
-                                <form action="{{ route('delete') }}" method="get" style="float: left; margin-left: 20px;">
+                                <form action="{{ route('resetShuffle') }}" method="get" style="float: left; margin-left: 20px;">
                                     <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Czy napewno chcesz zresetować losowanie?')">Resetuj losowanie</button>
                                 </form>
                             <form action="{{ route('sendMailPairs') }}" method="get" style="float: left; margin-left: 20px;">

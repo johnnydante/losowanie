@@ -25,7 +25,7 @@ Route::middleware(['auth'])->group(function() {
             Route::get('doAdmin/{id}', 'AdminController@doAdmin')->name('doAdmin');
             Route::get('deleteAdmin/{id}', 'AdminController@deleteAdmin')->name('deleteAdmin');
             Route::get('shuffle', 'AdminController@shuffle')->name('shuffle');
-            Route::get('delete', 'AdminController@delete')->name('delete');
+            Route::get('resetShuffle', 'AdminController@resetShuffle')->name('resetShuffle');
             Route::get('sendMailPairs', 'AdminController@sendMailPairs')->name('sendMailPairs');
         });
     });

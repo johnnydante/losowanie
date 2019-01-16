@@ -63,13 +63,13 @@ class AdminController extends Controller
                 $user->save();
             }
             DB::commit();
-            return redirect()->route('home')->with('success','Pomyślnie przetasowano');
+            return redirect()->back()->with('success','Pomyślnie przetasowano');
         } catch (\Exceptio $e) {
             Log::error($e->getMessage());
             Log::error($e->getTraceAsString());
             DB::rollBack();
         }
-        return redirect()->route('home')->with('danger','Wystąpił nieoczekiwany błąd. Spróbuj ponownie.');
+        return redirect()->back()->with('danger','Wystąpił nieoczekiwany błąd. Spróbuj ponownie.');
 
     }
 
@@ -78,7 +78,7 @@ class AdminController extends Controller
             return $nameToBuy;
     }
 
-    public function delete() {
+    public function resetShuffle() {
         try {
             DB::beginTransaction();
             ShuffledPairs::truncate();
@@ -88,13 +88,13 @@ class AdminController extends Controller
                 $user->save();
             }
             DB::commit();
-            return redirect()->route('home')->with('success','Pomyślnie zresetowano losowanie');
+            return redirect()->back()->with('success','Pomyślnie zresetowano losowanie');
         } catch (\Exception $e) {
             Log::error($e->getMessage());
             Log::error($e->getTraceAsString());
             DB::rollBack();
         }
-        return redirect()->route('home')->with('danger','Wystąpił nieoczekiwany błąd. Spróbuj ponownie.');
+        return redirect()->back()->with('danger','Wystąpił nieoczekiwany błąd. Spróbuj ponownie.');
     }
 
     public function deleteUser($id) {
@@ -107,7 +107,7 @@ class AdminController extends Controller
         foreach (User::all() as $user) {
             Mail::to($user->email)->send(new Invitation());
         }
-        return redirect()->route('home')->with('success','Pomyślnie wysłano maile');
+        return redirect()->back()->with('success','Pomyślnie wysłano maile');
     }
 
     public function saveEditUser(ChangeMailRequest $request, $id) {

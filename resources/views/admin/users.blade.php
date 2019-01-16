@@ -88,6 +88,11 @@
 																<i class="fas fa-edit"></i>
 															</span>
 														@endif
+														@if($user->roles == 'admin' &&  Auth::user()->id == $user->id)
+															<span class="editUser">
+																<i class="fas fa-edit"></i>
+															</span>
+														@endif
 														@if($user->roles != 'admin' && $user->roles != 'superadmin')
 															@if(!Auth::user()->isSuperAdmin())
 																	<span class="editUser">
