@@ -1,5 +1,5 @@
 @component('mail::message')
-# Witaj w losowaniu rodzinnym
+# Witaj w Rodzinnym losowaniu
 
 <div class="container">
     <div class="row justify-content-center">
@@ -13,12 +13,22 @@
             </div>
         </div>
     </div>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <p>
+                        Twój login na stronie, to Twój e-mail, a hasło do pierwszego logowania to 'mojehaslo', po zalogowaniu możesz zmienić swoje hasło na dowolne
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 @component('mail::button', ['url' => \URL::to('/'), 'color' => 'success'])
 Rodzinne losowanie
 @endcomponent
-
 
 
 Z pozdrowieniami,<br>
