@@ -61,7 +61,7 @@
 															<div class="form-group row">
 																<label for="email" ></label>
 																<div class="col-md-8">
-																	<input type="text" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }} email" value="{{ $user->email }}"  name="email">
+																	<input type="text" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }} email" value="{{ $errors->has('email') ? old('email') : $user->email }}"  name="email">
 																	<input type="hidden" value="{{ $user->id }}" name="userId">
 																</div>
 
@@ -76,10 +76,14 @@
 														</span>
 													</td>
 												@endif
-												@if($user->hasTaken($user))
-													<td style="color: green; padding-left: 40px;"><b>TAK</b></td>
+												@if(Auth::user()->canTakeName())
+													@if($user->hasTaken($user))
+														<td style="color: green; padding-left: 40px;"><b>TAK</b></td>
+													@else
+														<td style="color: darkred; padding-left: 40px;">NIE</td>
+													@endif
 												@else
-													<td style="color: darkred; padding-left: 40px;">NIE</td>
+														<td style="padding-left: 40px;"> - </td>
 												@endif
 												@if(Auth::user()->isAdmin())
 													<td>
@@ -152,6 +156,7 @@
 			var form = $('#{{ old('userId') }}');
         	form.show();
         	var oldMail = form.parent().find('.oldMail');
+        	var email = '{{ old('email') }}';
 			oldMail.hide();
 			$('.editUser').hide();
 			$('.doAdmin').hide();
