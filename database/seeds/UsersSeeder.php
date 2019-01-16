@@ -16,7 +16,7 @@ class UsersSeeder extends Seeder
 
         DB::table('users')->insert([
             'name' => 'Dawid',
-            'email' => 'testAdmin@test.pl',
+            'email' => 'admin@test.pl',
             'password' => Hash::make('mojehaslo'),
             'roles' => 'superadmin',
             'hasTaken' => 0
@@ -26,7 +26,7 @@ class UsersSeeder extends Seeder
             DB::table('users')->insert([
                 'name' => $users[$i],
                 'email' => 'test'.$i.'@test.pl',
-                'password' => Hash::make('qwerty'),
+                'password' => Hash::make('mojehaslo'),
                 'roles' => null,
                 'hasTaken' => 0
             ]);
