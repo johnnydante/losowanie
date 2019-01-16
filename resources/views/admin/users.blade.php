@@ -145,6 +145,7 @@
             oldMail.hide();
             $('.editUser').hide();
             $('.doAdmin').hide();
+            $('.deleteAdmin').hide();
             $('.deleteUser').hide();
         });
         @if($errors->has('email'))
@@ -154,6 +155,7 @@
 			oldMail.hide();
 			$('.editUser').hide();
 			$('.doAdmin').hide();
+        	$('.deleteAdmin').hide();
 			$('.deleteUser').hide();
 			$('#alert-{{ old('userId') }}').show();
 		@endif
