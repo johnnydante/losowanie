@@ -48,7 +48,12 @@
 												@else
 													<th scope="row"></th>
 												@endif
-												<td>{{ $user->name }}</td>
+												<td>
+													{{ $user->name }}
+													@if($user->roles == 'admin' ||  $user->roles == 'superadmin')
+														<span style="color: darkgreen;">(A) </span>
+													@endif
+												</td>
 												@if(Auth::user()->isAdmin())
 													<td class="tableMail">
 														<span class="oldMail">{{ $user->email }}</span>
@@ -78,20 +83,42 @@
 												@endif
 												@if(Auth::user()->isAdmin())
 													<td>
-														<span class="editUser">
-															<i class="fas fa-edit"></i>
-														</span>
-														&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-														<a onclick="return confirm('Czy napewno chcesz usunąć tego użytkownika?')"
-														   href="{{ route('deleteUser', ['id' => $user->id]) }}" class="deleteUser">
-															<i class="fas fa-times"></i>
-														</a>
+														@if(Auth::user()->isSuperAdmin() && $user->roles != 'admin')
+															<span class="editUser">
+																<i class="fas fa-edit"></i>
+															</span>
+														@endif
+														@if($user->roles != 'admin' && $user->roles != 'superadmin')
+															@if(!Auth::user()->isSuperAdmin())
+																	<span class="editUser">
+																	<i class="fas fa-edit"></i>
+																</span>
+															@endif
+															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp
+															<a onclick="return confirm('Czy napewno chcesz usunąć tego użytkownika?')"
+															   href="{{ route('deleteUser', ['id' => $user->id]) }}" class="deleteUser">
+																<i class="fas fa-times"></i>
+															</a>
+															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp
+															@if(Auth::user()->isSuperAdmin())
+																<a onclick="return confirm('Czy napewno chcesz nadać temu użytkownikowi rolę admina?')"
+																   href="{{ route('doAdmin', ['id' => $user->id]) }}" class="doAdmin">
+																	<i class="fas fa-user-graduate"></i>
+																</a>
+															@endif
+														@elseif(Auth::user()->isSuperAdmin() && $user->roles != 'superadmin')
+															<a onclick="return confirm('Czy napewno chcesz usunąć temu użytkownikowi rolę admina?')"
+															   href="{{ route('deleteAdmin', ['id' => $user->id]) }}" class="deleteAdmin">
+																<i class="fas fa-user-graduate"></i>
+															</a>
+														@endif
 													</td>
 												@endif
 											</tr>
 										@endforeach
 									</tbody>
 								</table>
+								<p style="color: darkgreen;">(A) - Administrator</p>
 							</div>
 						@endauth
 					</div>
@@ -112,6 +139,7 @@
             form.show();
             oldMail.hide();
             $('.editUser').hide();
+            $('.doAdmin').hide();
             $('.deleteUser').hide();
         });
         @if($errors->has('email'))
@@ -120,6 +148,7 @@
         	var oldMail = form.parent().find('.oldMail');
 			oldMail.hide();
 			$('.editUser').hide();
+			$('.doAdmin').hide();
 			$('.deleteUser').hide();
 			$('#alert-{{ old('userId') }}').show();
 		@endif

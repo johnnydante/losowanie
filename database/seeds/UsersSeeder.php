@@ -12,12 +12,13 @@ class UsersSeeder extends Seeder
     public function run()
     {
         $users = ['Dariusz', 'Magdalena', 'Justyna', 'Paweł', 'Beata', 'Zbigniew', 'Barbara', 'Edward', 'Grażyna', 'Zdzisław', 'Damian'];
+        shuffle($users);
 
         DB::table('users')->insert([
             'name' => 'Dawid',
             'email' => 'testAdmin@test.pl',
             'password' => Hash::make('mojehaslo'),
-            'roles' => 'admin',
+            'roles' => 'superadmin',
             'hasTaken' => 0
         ]);
 
@@ -26,7 +27,7 @@ class UsersSeeder extends Seeder
                 'name' => $users[$i],
                 'email' => 'test'.$i.'@test.pl',
                 'password' => Hash::make('qwerty'),
-                'roles' => 'user',
+                'roles' => null,
                 'hasTaken' => 0
             ]);
         }

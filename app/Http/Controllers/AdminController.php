@@ -114,4 +114,14 @@ class AdminController extends Controller
         User::find($id)->update(['email' => $request->get('email')]);
         return redirect()->route('users')->with('success','Pomyślnie edytowano adres e-mail');
     }
+
+    public function doAdmin($id) {
+        User::find($id)->update(['roles' => 'admin']);
+        return redirect()->route('users')->with('success','Pomyślnie nadano użytkownikowi rolę admina');
+    }
+
+    public function deleteAdmin($id) {
+        User::find($id)->update(['roles' => null]);
+        return redirect()->route('users')->with('success','Pomyślnie usunięto użytkownikowi rolę admina');
+    }
 }

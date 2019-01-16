@@ -14,7 +14,7 @@ class User extends Authenticatable
     use Notifiable;
 
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'roles'
     ];
 
 
@@ -29,7 +29,14 @@ class User extends Authenticatable
     }
 
     public function isAdmin() {
-        if(Auth::user()->roles == 'admin') {
+        if(Auth::user()->roles == 'admin' || Auth::user()->roles == 'superadmin') {
+            return true;
+        }
+        return false;
+    }
+
+    public function isSuperAdmin() {
+        if(Auth::user()->roles == 'superadmin') {
             return true;
         }
         return false;

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 class AuthAdmin
 {
     protected $arrRolesWithAccess = [
-        'admin'
+        'admin', 'superadmin'
     ];
 
     public function handle($request, Closure $next) {

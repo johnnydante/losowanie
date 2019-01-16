@@ -18,14 +18,48 @@ body {
     opacity: 0.9;
 }
 
+.deleteAdmin {
+    opacity: 0.8;
+    color: red;
+    cursor: pointer;
+}
+
+.deleteAdmin:hover {
+    opacity: 1;
+    color: red;
+}
+
 .editUser {
+    opacity: 0.8;
     color: dodgerblue;
     cursor: pointer;
 }
 
+.editUser:hover {
+    opacity: 1;
+    color: dodgerblue;
+}
+
 .deleteUser {
+    opacity: 0.8;
     color: red;
     cursor: pointer;
+}
+
+.deleteUser:hover {
+    opacity: 1;
+    color: red;
+}
+
+.doAdmin {
+    opacity: 0.8;
+    color: rebeccapurple;
+    cursor: pointer;
+}
+
+.doAdmin:hover {
+    opacity: 1;
+    color: rebeccapurple;
 }
 
 .inner {
@@ -74,3 +108,4 @@ body {
     top: 11px;
     left: -7px;
 }
+
