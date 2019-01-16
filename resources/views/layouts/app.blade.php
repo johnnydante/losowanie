@@ -50,32 +50,32 @@
                         <ul class="navbar-nav ml-auto" style="text-align: left; width: 100%">
                             <!-- Authentication Links -->
                             @if(Auth::user()->isAdmin())
-                                <form action="{{ route('users') }}" method="get" style="float: left; margin-left: 0px;">
+                                <form action="{{ route('users') }}" method="get" style="float: left; margin-left: 10px;">
                                     <button type="submit" class="btn btn-outline-primary" >Uczestnicy losowania</button>
                                 </form>
                             @else
                                 @if(Auth::user()->canTakeName())
-                                    <form action="{{ route('users') }}" method="get" style="float: left; margin-left: 0px;">
+                                    <form action="{{ route('users') }}" method="get" style="float: left; margin-left: 10px;">
                                         <button type="submit" class="btn btn-outline-success" >Uczestnicy losowania</button>
                                     </form>
                                 @endif
                             @endif
                             @if(Auth::user()->isAdmin())
 
-                                <form action="{{ route('shuffle') }}" method="get" style="float: left;">
+                                <form action="{{ route('shuffle') }}" method="get" style="float: left; margin-left: 10px;">
                                     <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Czy napewno chcesz wykonać nowe tasowanie?')">Nowe tasowanie</button>
                                 </form>
                                 @if(Auth::user()->canTakeName())
-                                    <form action="{{ route('resetShuffle') }}" method="get" style="float: left; margin-left: 0px;">
+                                    <form action="{{ route('resetShuffle') }}" method="get" style="float: left; margin-left: 10px;">
                                         <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Czy napewno chcesz zresetować losowanie?')">Resetuj losowanie</button>
                                     </form>
-                                    <form action="{{ route('sendMailPairs') }}" method="get" style="float: left; margin-left: 0px;">
+                                    <form action="{{ route('sendMailPairs') }}" method="get" style="float: left; margin-left: 10px;">
                                         <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Czy napewno chcesz wysłać wszystkim użytkownikom e-mail z zaproszeniem do losowania?')">Wyślij zaproszenia</button>
                                     </form>
                                 @endif
                             @endif
                         </ul>
-                        <a class="btn btn-outline-dark" href="{{ route('logout') }}" style="float: left;"
+                        <a class="btn btn-outline-dark" href="{{ route('logout') }}" style="float: left; margin-left: 10px;"
                            onclick="event.preventDefault();
                                              document.getElementById('logout-form').submit();">
                             {{ __('Wyloguj') }}
