@@ -32,50 +32,62 @@
 </head>
 <body>
     <div id="app" >
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
-            <div class="container" >
-                <div class="right" style="width: 100%;">
-					@auth
-						@if(Auth::user()->isAdmin())
-                        <a href="{{ route('home') }}"> <i class="fas fa-gift logo" style="float: left; margin-left: 20px; font-size: 32px; margin-right: 20px; color: #00bb4d"></i></a>
-							<form action="{{ route('shuffle') }}" method="get" style="float: left;">
-								<button type="submit" class="btn btn-outline-danger" onclick="return confirm('Czy napewno chcesz wykonać nowe tasowanie?')">Nowe tasowanie</button>
-							</form>
-                            @if(Auth::user()->canTakeName())
-                                <form action="{{ route('resetShuffle') }}" method="get" style="float: left; margin-left: 20px;">
-                                    <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Czy napewno chcesz zresetować losowanie?')">Resetuj losowanie</button>
-                                </form>
-                            <form action="{{ route('sendMailPairs') }}" method="get" style="float: left; margin-left: 20px;">
-                                <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Czy napewno chcesz wysłać wszystkim użytkownikom e-mail z zaproszeniem do losowania?')">Wyślij zaproszenia</button>
-                            </form>
-                            @endif
+        @auth
+            <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+                <div class="container" >
+                    <a href="{{ route('home') }}"> <i class="fas fa-gift logo" style="float: left; margin-left: 20px; font-size: 32px; margin-right: 20px; color: #00bb4d"></i></a>
 
-						@endif
-						<a class="btn btn-outline-dark" href="{{ route('logout') }}" style="float: right;"
-						   onclick="event.preventDefault();
-										 document.getElementById('logout-form').submit();">
-							{{ __('Wyloguj') }}
-						</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
 
-						<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-							@csrf
-						</form>
-                        @if(Auth::user()->isAdmin())
-                            <form action="{{ route('users') }}" method="get" style="float: right; margin-right: 20px;">
-                                <button type="submit" class="btn btn-outline-primary" >Uczestnicy losowania</button>
-                            </form>
-                        @else
-                            <a href="{{ route('home') }}"> <i class="fas fa-gift logo" style="float: left; margin-left: 20px; font-size: 32px; margin-right: 20px; color: #00bb4d"></i></a>
-                            @if(Auth::user()->canTakeName())
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <!-- Left Side Of Navbar -->
+                        <ul class="navbar-nav mr-auto">
+
+                        </ul>
+                        <!-- Right Side Of Navbar -->
+                        <ul class="navbar-nav ml-auto">
+                            <!-- Authentication Links -->
+                            @if(Auth::user()->isAdmin())
                                 <form action="{{ route('users') }}" method="get" style="float: left; margin-left: 0px;">
-                                    <button type="submit" class="btn btn-outline-success" >Uczestnicy losowania</button>
+                                    <button type="submit" class="btn btn-outline-primary" >Uczestnicy losowania</button>
                                 </form>
+                            @else
+                                @if(Auth::user()->canTakeName())
+                                    <form action="{{ route('users') }}" method="get" style="float: left; margin-left: 0px;">
+                                        <button type="submit" class="btn btn-outline-success" >Uczestnicy losowania</button>
+                                    </form>
+                                @endif
                             @endif
-                        @endif
-					@endauth
+                            @if(Auth::user()->isAdmin())
+
+                                <form action="{{ route('shuffle') }}" method="get" style="float: left;">
+                                    <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Czy napewno chcesz wykonać nowe tasowanie?')">Nowe tasowanie</button>
+                                </form>
+                                @if(Auth::user()->canTakeName())
+                                    <form action="{{ route('resetShuffle') }}" method="get" style="float: left; margin-left: 0px;">
+                                        <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Czy napewno chcesz zresetować losowanie?')">Resetuj losowanie</button>
+                                    </form>
+                                    <form action="{{ route('sendMailPairs') }}" method="get" style="float: left; margin-left: 0px;">
+                                        <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Czy napewno chcesz wysłać wszystkim użytkownikom e-mail z zaproszeniem do losowania?')">Wyślij zaproszenia</button>
+                                    </form>
+                                @endif
+                            @endif
+                        </ul>
+                        <a class="btn btn-outline-dark" href="{{ route('logout') }}" style="float: left;"
+                           onclick="event.preventDefault();
+                                             document.getElementById('logout-form').submit();">
+                            {{ __('Wyloguj') }}
+                        </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    </div>
                 </div>
-            </div>
-        </nav>
+            </nav>
+        @endauth
 
         <div class="card-body">
 
