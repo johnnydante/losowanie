@@ -47,7 +47,7 @@
 
                         </ul>
                         <!-- Right Side Of Navbar -->
-                        <ul class="navbar-nav ml-auto">
+                        <ul class="navbar-nav ml-auto" style="text-align: left; width: 100%">
                             <!-- Authentication Links -->
                             @if(Auth::user()->isAdmin())
                                 <form action="{{ route('users') }}" method="get" style="float: left; margin-left: 0px;">
