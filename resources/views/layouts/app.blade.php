@@ -33,7 +33,7 @@
 <body>
     <div id="app" >
         @auth
-            <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+            <nav id="navi" class="navbar navbar-expand-md navbar-light navbar-laravel">
                 <div class="container" >
                     <a href="{{ route('home') }}"> <i class="fas fa-gift logo" style="float: left; margin-left: 20px; font-size: 32px; margin-right: 20px; color: #00bb4d"></i></a>
 
@@ -70,7 +70,7 @@
                                         <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Czy napewno chcesz zresetować losowanie?')">Resetuj losowanie</button>
                                     </form>
                                     <form action="{{ route('sendMailPairs') }}" method="get" style="float: left; margin-left: 10px;">
-                                        <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Czy napewno chcesz wysłać wszystkim użytkownikom e-mail z zaproszeniem do losowania?')">Wyślij zaproszenia</button>
+                                        <button id="sendMails" type="submit" class="btn btn-outline-danger">Wyślij zaproszenia</button>
                                     </form>
                                 @endif
                             @endif
@@ -89,12 +89,39 @@
             </nav>
         @endauth
 
-        <div class="card-body">
+        <div class="card-body" id="mainCard">
 
             @yield('content')
 
         </div>
     </div>
+
+    <script>
+        $( document ).ready(function() {
+            $('#sendMails').on('click', function () {
+                var a = confirm('Czy napewno chcesz wysłać wszystkim użytkownikom e-mail z zaproszeniem do losowania?');
+                if(a == true) {
+                    $('#mainCard').parent().append("<div class='card-body' style='opacity:0.7; top: 30px;'>" +
+                        "<main class='py-4'>"+
+                            "<div class='container'>"+
+                                "<div class='row justify-content-center'>"+
+                                    "<div class='col-md-5'>"+
+                                        "<div class='card' style='min-height:200px;'>"+
+                                            " <div class='loader' style='padding: 30px; margin: auto; margin-top: 50px;'></div>" +
+                                            "<h4 style='text-align: center; padding: 20px; margin-top: 30px;'>Proszę czekać, trwa wysyłanie e-maili</h4>"+
+                                        "</div>"+
+                                    "</div>"+
+                                "</div>"+
+                            "</div>"+
+                        "</main>");
+                    $('#mainCard').hide();
+                    $('#navi').hide();
+                } else {
+                    return false;
+                }
+            });
+        });
+    </script>
 
 </body>
 </html>

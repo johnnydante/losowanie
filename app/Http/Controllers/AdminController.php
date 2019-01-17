@@ -114,9 +114,8 @@ class AdminController extends Controller
     }
 
     public function sendMailPairs() {
-        $invitation = new Invitation();
         foreach (User::all() as $user) {
-            Mail::to($user->email)->queue($invitation);
+            Mail::to($user->email)->send(new Invitation());
         }
         return redirect()->back()->with('success','Pomyślnie wysłano maile');
     }
