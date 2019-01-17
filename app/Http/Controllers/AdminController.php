@@ -11,7 +11,6 @@ use App\ShuffledPairs;
 use App\Suggestions;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\URL;
 
 class AdminController extends Controller
 {
@@ -25,6 +24,7 @@ class AdminController extends Controller
         foreach(User::all() as $user) {
             $arrNames[] = $user->name;
         }
+        shuffle($arrNames);
         $pairs = [
             'Magdalena' => 'Dariusz',
             'Justyna' => 'Paweł',
@@ -35,6 +35,7 @@ class AdminController extends Controller
         $shufflePairs = [];
         $lostNames = [];
         for($i=0; $i<count($arrNames); $i++) {
+            $intWhile = 0;
             do {
                 $chosenName = $this->getRandomName($arrNames);
                 $number = 0;
@@ -44,10 +45,19 @@ class AdminController extends Controller
                         continue;
                     }
                 }
+                $intWhile++;
+                if($intWhile > 30) {
+                    break;
+                }
             } while($chosenName == $arrNames[$i] || in_array($chosenName,$lostNames) || $number == 1);
-
+            if($intWhile > 30) {
+                break;
+            }
             $shufflePairs[$arrNames[$i]] = $chosenName;
             $lostNames[] = $shufflePairs[$arrNames[$i]];
+        }
+        if(count($shufflePairs) != 12 ) {
+            return redirect(\Request::url());
         }
 
         try {
@@ -104,8 +114,9 @@ class AdminController extends Controller
     }
 
     public function sendMailPairs() {
+        $invitation = new Invitation();
         foreach (User::all() as $user) {
-            Mail::to($user->email)->send(new Invitation());
+            Mail::to($user->email)->queue($invitation);
         }
         return redirect()->back()->with('success','Pomyślnie wysłano maile');
     }
