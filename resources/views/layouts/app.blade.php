@@ -62,15 +62,17 @@
                             @endif
                             @if(Auth::user()->isAdmin())
 
+                                @if(Auth::user()->canTakeName())
+                                    <form action="{{ route('sendMailPairs') }}" method="get" style="float: left; margin-left: 10px;">
+                                        <button id="sendMails" type="submit" class="purple btn btn-outline">Wyślij zaproszenia</button>
+                                    </form>
+                                @endif
                                 <form action="{{ route('shuffle') }}" method="get" style="float: left; margin-left: 10px;">
-                                    <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Czy napewno chcesz wykonać nowe tasowanie?')">Nowe tasowanie</button>
+                                    <button type="submit" class="btn btn-outline-danger" id="shuffle">Nowe tasowanie</button>
                                 </form>
                                 @if(Auth::user()->canTakeName())
                                     <form action="{{ route('resetShuffle') }}" method="get" style="float: left; margin-left: 10px;">
-                                        <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Czy napewno chcesz zresetować losowanie?')">Resetuj losowanie</button>
-                                    </form>
-                                    <form action="{{ route('sendMailPairs') }}" method="get" style="float: left; margin-left: 10px;">
-                                        <button id="sendMails" type="submit" class="btn btn-outline-danger">Wyślij zaproszenia</button>
+                                        <button type="submit" class="btn btn-outline-danger" id="resetShuffle">Resetuj losowanie</button>
                                     </form>
                                 @endif
                             @endif
@@ -113,6 +115,50 @@
                                     "</div>"+
                                 "</div>"+
                             "</div>"+
+                        "</main>");
+                    $('#mainCard').hide();
+                    $('#navi').hide();
+                } else {
+                    return false;
+                }
+            });
+            $('#shuffle').on('click', function () {
+                var a = confirm('Czy napewno chcesz wykonać nowe tasowanie?');
+                if(a == true) {
+                    $('#mainCard').parent().append("<div class='card-body' style='opacity:0.7; top: 30px;'>" +
+                        "<main class='py-4'>"+
+                        "<div class='container'>"+
+                        "<div class='row justify-content-center'>"+
+                        "<div class='col-md-5'>"+
+                        "<div class='card' style='min-height:200px;'>"+
+                        " <div class='loader' style='padding: 30px; margin: auto; margin-top: 50px;'></div>" +
+                        "<h4 style='text-align: center; padding: 20px; margin-top: 30px;'>Proszę czekać, trwa tasowanie</h4>"+
+                        "</div>"+
+                        "</div>"+
+                        "</div>"+
+                        "</div>"+
+                        "</main>");
+                    $('#mainCard').hide();
+                    $('#navi').hide();
+                } else {
+                    return false;
+                }
+            });
+            $('#resetShuffle').on('click', function () {
+                var a = confirm('Czy napewno chcesz zresetować losowanie?');
+                if(a == true) {
+                    $('#mainCard').parent().append("<div class='card-body' style='opacity:0.7; top: 30px;'>" +
+                        "<main class='py-4'>"+
+                        "<div class='container'>"+
+                        "<div class='row justify-content-center'>"+
+                        "<div class='col-md-5'>"+
+                        "<div class='card' style='min-height:200px;'>"+
+                        " <div class='loader' style='padding: 30px; margin: auto; margin-top: 50px;'></div>" +
+                        "<h4 style='text-align: center; padding: 20px; margin-top: 30px;'>Proszę czekać, trwa resetowanie losowania</h4>"+
+                        "</div>"+
+                        "</div>"+
+                        "</div>"+
+                        "</div>"+
                         "</main>");
                     $('#mainCard').hide();
                     $('#navi').hide();

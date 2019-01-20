@@ -133,3 +133,24 @@ body {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+.purple {
+    background-color: white;
+    color: rebeccapurple;
+    border-color: rebeccapurple!important;
+}
+
+.purple:hover {
+    border-color: rebeccapurple!important;
+    background-color: rebeccapurple;
+    color: white;
+}
+
+.purple:visited, .purple:focus {
+    box-shadow:0 0 0 .2rem mediumpurple;
+}
+
+.purple:active {
+    background-color: rebeccapurple!important;
+    box-shadow:0 0 0 .2rem mediumpurple;
+}

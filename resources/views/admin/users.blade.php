@@ -180,7 +180,7 @@
                     "<div class='row justify-content-center'>"+
                     "<div class='col-md-5'>"+
                     "<div class='card' style='min-height:200px;'>"+
-                    " <div class='loader' style='padding: 30px; margin: auto; margin-top: 50px;'></div>" +
+                    "<div class='loader' style='padding: 30px; margin: auto; margin-top: 50px;'></div>" +
                     "<h4 style='text-align: center; padding: 20px; margin-top: 30px;'>Proszę czekać, trwa wysyłanie e-maila</h4>"+
                     "</div>"+
                     "</div>"+

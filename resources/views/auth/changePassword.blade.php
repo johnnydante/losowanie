@@ -8,7 +8,7 @@
                     <div class="card">
                         <div class="card-header">
                             <h5 style="float: left; margin-top: 10px;">{{ __('Zmiana hasła') }}</h5>
-                            <a href='{{ route('home') }}' class="btn btn-outline-info" style="float: right; margin-top: 3px;">
+                            <a href='{{ route('home') }}' class="btn btn-outline-primary" style="float: right; margin-top: 3px;">
                                 {{ __('Powrót') }}
                             </a>
                         </div>
