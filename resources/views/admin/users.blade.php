@@ -87,6 +87,7 @@
 												@endif
 												@if(Auth::user()->isAdmin())
 													<td>
+
 														@if(Auth::user()->isSuperAdmin() && $user->roles != 'admin')
 															<span class="editUser">
 																<i class="fas fa-edit"></i>
@@ -109,11 +110,16 @@
 																<i class="fas fa-times"></i>
 															</a>
 															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp
+															<a href="{{ route('sendMail', ['id' => $user->id]) }}" class="sendMail">
+																<i class="far fa-envelope"></i>
+															</a>
+															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp
 															@if(Auth::user()->isSuperAdmin())
 																<a onclick="return confirm('Czy napewno chcesz nadać temu użytkownikowi rolę admina?')"
 																   href="{{ route('doAdmin', ['id' => $user->id]) }}" class="doAdmin">
 																	<i class="fas fa-user-graduate"></i>
 																</a>
+																&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp
 															@endif
 														@elseif(Auth::user()->isSuperAdmin() && $user->roles != 'superadmin')
 															<a onclick="return confirm('Czy napewno chcesz usunąć temu użytkownikowi rolę admina?')"
@@ -164,6 +170,29 @@
 			$('.deleteUser').hide();
 			$('#alert-{{ old('userId') }}').show();
 		@endif
+
+		$('.sendMail').on('click', function () {
+            var a = confirm('Czy napewno chcesz wysłać e-mail z zaproszeniem do tego uczestnika?');
+            if(a == true) {
+                $('#mainCard').parent().append("<div class='card-body' style='opacity:0.7; top: 30px;'>" +
+                    "<main class='py-4'>"+
+                    "<div class='container'>"+
+                    "<div class='row justify-content-center'>"+
+                    "<div class='col-md-5'>"+
+                    "<div class='card' style='min-height:200px;'>"+
+                    " <div class='loader' style='padding: 30px; margin: auto; margin-top: 50px;'></div>" +
+                    "<h4 style='text-align: center; padding: 20px; margin-top: 30px;'>Proszę czekać, trwa wysyłanie e-maila</h4>"+
+                    "</div>"+
+                    "</div>"+
+                    "</div>"+
+                    "</div>"+
+                    "</main>");
+                $('#mainCard').hide();
+                $('#navi').hide();
+            } else {
+                return false;
+            }
+        });
     });
 
 </script>

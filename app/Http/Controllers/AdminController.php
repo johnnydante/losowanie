@@ -113,7 +113,12 @@ class AdminController extends Controller
         return redirect()->route('users')->with('success','Użytkownik został usunięty');
     }
 
-    public function sendMailPairs() {
+    public function sendMailPairs($id = null) {
+        if($id) {
+            $user = User::find($id);
+            Mail::to($user->email)->send(new Invitation());
+            return redirect()->back()->with('success','Pomyślnie wysłano e-mail do tego uczestnika');
+        }
         foreach (User::all() as $user) {
             Mail::to($user->email)->send(new Invitation());
         }

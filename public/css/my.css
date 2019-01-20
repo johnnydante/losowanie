@@ -35,6 +35,17 @@ body {
     cursor: pointer;
 }
 
+.sendMail {
+    opacity: 0.8;
+    color: rebeccapurple;
+    cursor: pointer;
+}
+
+.sendMail:hover {
+    opacity: 1;
+    color: rebeccapurple;
+}
+
 .editUser:hover {
     opacity: 1;
     color: dodgerblue;
@@ -53,13 +64,13 @@ body {
 
 .doAdmin {
     opacity: 0.8;
-    color: rebeccapurple;
+    color: darkgreen;
     cursor: pointer;
 }
 
 .doAdmin:hover {
     opacity: 1;
-    color: rebeccapurple;
+    color: darkgreen;
 }
 
 .inner {
