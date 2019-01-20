@@ -18,7 +18,7 @@
             <div class="card">
                 <div class="card-body">
                     <p>
-                        Twój login na stronie, to Twój e-mail, a hasło do pierwszego logowania to '<b>mojehaslo</b>', po zalogowaniu możesz zmienić swoje hasło na dowolne
+                        Twój login na stronie, to Twój e-mail, a hasło do pierwszego logowania to <b style="color: black; font-size: 18px;">'mojehaslo'</b>, po zalogowaniu możesz zmienić swoje hasło na dowolne
                     </p>
                 </div>
             </div>
