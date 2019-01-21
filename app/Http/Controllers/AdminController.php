@@ -110,6 +110,9 @@ class AdminController extends Controller
 
     public function deleteUser($id) {
         $user = User::find($id);
+        if($user->canTakeName()) {
+            return redirect()->route('users')->with('danger','Możesz usunąć uczestnika tylko wtedy, gdy losowanie jest zresetowane');
+        }
         $user->delete();
         return redirect()->route('users')->with('success','Użytkownik został usunięty');
     }
