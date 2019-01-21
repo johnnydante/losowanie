@@ -126,7 +126,11 @@ class AdminController extends Controller
             return redirect()->back()->with('success','Pomyślnie wysłano e-mail do tego uczestnika');
         }
         foreach (User::all() as $user) {
-            Mail::to($user->email)->send(new Invitation());
+            if($user->logged == null) {
+                Mail::to($user->email)->send(new Invitation());
+            } else {
+                Mail::to($user->email)->send(new SecondMail());
+            }
         }
         return redirect()->back()->with('success','Pomyślnie wysłano maile');
     }

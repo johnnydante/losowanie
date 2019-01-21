@@ -106,6 +106,7 @@ class UserController extends Controller
 		if (Hash::check($request->get('oldPassword'), $myPassword)) {
 			$user = Auth::user();
 			$user->password = Hash::make($request->get('password'));
+			$user->logged++;
 			$user->save();
 		} else {
 			return redirect()->back()->with('danger', 'Stare hasło nie jest poprawne');
