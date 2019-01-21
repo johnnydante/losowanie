@@ -157,6 +157,7 @@
             $('.doAdmin').hide();
             $('.deleteAdmin').hide();
             $('.deleteUser').hide();
+            $('.sendMail').hide();
         });
         @if($errors->has('email'))
 			var form = $('#{{ old('userId') }}');
