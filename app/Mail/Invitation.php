@@ -18,7 +18,7 @@ class Invitation extends Mailable
 
     public function build()
     {
-        return $this->from('losowanie.tendaj@gmail.com')
+        return $this->from('rodzinne.losowanie@gmail.com')
                     ->subject('Zaproszenie')
                     ->markdown('emails.invitation');
     }

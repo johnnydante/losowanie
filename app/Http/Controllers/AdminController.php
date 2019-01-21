@@ -46,11 +46,11 @@ class AdminController extends Controller
                     }
                 }
                 $intWhile++;
-                if($intWhile > 30) {
+                if($intWhile > 2.5*count($arrNames)) {
                     break;
                 }
             } while($chosenName == $arrNames[$i] || in_array($chosenName,$lostNames) || $number == 1);
-            if($intWhile > 30) {
+            if($intWhile > 2.5*count($arrNames)) {
                 break;
             }
             $shufflePairs[$arrNames[$i]] = $chosenName;
