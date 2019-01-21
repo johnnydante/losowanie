@@ -111,7 +111,7 @@ class UserController extends Controller
 		} else {
 			return redirect()->back()->with('danger', 'Stare hasło nie jest poprawne');
 		}
-		return redirect()->back()->with('success', 'Hasło zostało zmienione');
+		return redirect()->route('home')->with('success', 'Hasło zostało zmienione');
 	}
 
 
