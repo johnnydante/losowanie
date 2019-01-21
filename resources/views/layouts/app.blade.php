@@ -77,15 +77,17 @@
                                 @endif
                             @endif
                         </ul>
-                        <a class="btn btn-outline-dark" href="{{ route('logout') }}" style="float: left; margin-left: 10px;"
-                           onclick="event.preventDefault();
-                                             document.getElementById('logout-form').submit();">
-                            {{ __('Wyloguj') }}
-                        </a>
+                        @if(Auth::user()->logged > 1)
+                            <a class="btn btn-outline-dark" href="{{ route('logout') }}" style="float: left; margin-left: 10px;"
+                               onclick="event.preventDefault();
+                                                 document.getElementById('logout-form').submit();">
+                                {{ __('Wyloguj') }}
+                            </a>
 
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
+                        @endif
                     </div>
                 </div>
             </nav>
