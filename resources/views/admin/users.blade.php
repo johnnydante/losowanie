@@ -14,7 +14,7 @@
 									</form>
 								@if(Auth::user()->isAdmin())
 									<form action="{{ route('register') }}" method="get">
-										<button type="submit" class="btn btn-outline-success" style="float: right; margin-right: 20px; margin-top: 3px;">Dodaj uczestnika</button>
+										<button id="addUser" type="submit" class="btn btn-outline-success" style="float: right; margin-right: 20px; margin-top: 3px;">Dodaj uczestnika</button>
 									</form>
 								@endif
 							</div>
@@ -109,10 +109,12 @@
 															   href="{{ route('deleteUser', ['id' => $user->id]) }}" class="deleteUser">
 																<i class="fas fa-times"></i>
 															</a>
-															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp
-															<a href="{{ route('sendMail', ['id' => $user->id]) }}" class="sendMail">
-																<i class="far fa-envelope"></i>
-															</a>
+															@if(Auth::user()->canTakeName())
+																&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp
+																<a href="{{ route('sendMail', ['id' => $user->id]) }}" class="sendMail">
+																	<i class="far fa-envelope"></i>
+																</a>
+															@endif
 															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp
 															@if(Auth::user()->isSuperAdmin())
 																<a onclick="return confirm('Czy napewno chcesz nadać temu użytkownikowi rolę admina?')"
@@ -194,6 +196,7 @@
                 return false;
             }
         });
+
     });
 
 </script>

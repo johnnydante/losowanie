@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ChangeMailRequest;
 use App\Mail\Invitation;
+use App\Mail\SecondMail;
 use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -56,7 +57,7 @@ class AdminController extends Controller
             $shufflePairs[$arrNames[$i]] = $chosenName;
             $lostNames[] = $shufflePairs[$arrNames[$i]];
         }
-        if(count($shufflePairs) != 12 ) {
+        if(count($shufflePairs) != count($arrNames) ) {
             return redirect(\Request::url());
         }
 
@@ -116,7 +117,12 @@ class AdminController extends Controller
     public function sendMailPairs($id = null) {
         if($id) {
             $user = User::find($id);
-            Mail::to($user->email)->send(new Invitation());
+            if($user->logged == null) {
+                Mail::to($user->email)->send(new Invitation());
+            } else {
+                Mail::to($user->email)->send(new SecondMail());
+            }
+
             return redirect()->back()->with('success','Pomyślnie wysłano e-mail do tego uczestnika');
         }
         foreach (User::all() as $user) {

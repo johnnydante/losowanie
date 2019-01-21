@@ -13,6 +13,7 @@ use App\User;
 
 class UserController extends Controller
 {
+
     public function users() {
         return view('admin.users')->with('users',User::all());
     }
