@@ -60,7 +60,7 @@
 														<form class="editUserForm" id="{{ $user->id }}" action="{{ route('saveEditUser', ['id' => $user->id]) }}" method="get">
 															<div class="form-group row">
 																<label for="email" ></label>
-																<div class="col-md-8">
+																<div class="col-md-10">
 																	<input type="text" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }} email" value="{{ $errors->has('email') ? old('email') : $user->email }}"  name="email">
 																	<input type="hidden" value="{{ $user->id }}" name="userId">
 																</div>
@@ -87,7 +87,6 @@
 												@endif
 												@if(Auth::user()->isAdmin())
 													<td>
-
 														@if(Auth::user()->isSuperAdmin() && $user->roles != 'admin')
 															<span class="editUser">
 																<i class="fas fa-edit"></i>
@@ -98,9 +97,12 @@
 																<i class="fas fa-edit"></i>
 															</span>
 														@endif
+														<span class="cancelEdit">
+															<b>A n u l u j</b>
+														</span>
 														@if($user->roles != 'admin' && $user->roles != 'superadmin')
 															@if(!Auth::user()->isSuperAdmin())
-																	<span class="editUser">
+																<span class="editUser">
 																	<i class="fas fa-edit"></i>
 																</span>
 															@endif
@@ -149,10 +151,10 @@
     $( document ).ready(function() {
         $('.editUser').click(function () {
             var $this = $(this);
-            var mail = $this.parent().parent().find('.oldMail').innerHTML;
             var oldMail = $this.parent().parent().find('.oldMail');
 			var form = $this.parent().parent().find('.editUserForm');
-			console.log(mail);
+			var cancel = $this.parent().parent().find('.cancelEdit');
+			cancel.show();
             form.show();
             oldMail.hide();
             $('.editUser').hide();
@@ -161,6 +163,21 @@
             $('.deleteUser').hide();
             $('.sendMail').hide();
         });
+
+        $('.cancelEdit').click(function () {
+            var $this = $(this);
+            var oldMail = $this.parent().parent().find('.oldMail');
+            var form = $this.parent().parent().find('.editUserForm');
+            $('.cancelEdit').hide();
+            form.hide();
+            oldMail.show();
+            $('.editUser').show();
+            $('.doAdmin').show();
+            $('.deleteAdmin').show();
+            $('.deleteUser').show();
+            $('.sendMail').show();
+        });
+
         @if($errors->has('email'))
 			var form = $('#{{ old('userId') }}');
         	form.show();

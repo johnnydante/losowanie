@@ -154,3 +154,14 @@ body {
     background-color: rebeccapurple!important;
     box-shadow:0 0 0 .2rem mediumpurple;
 }
+
+.cancelEdit {
+    display: none;
+    cursor: pointer;
+    color: #e00700;
+    opacity: 0.7;
+}
+
+.cancelEdit:hover {
+    opacity: 1;
+}
