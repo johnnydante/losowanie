@@ -152,4 +152,48 @@ class AdminController extends Controller
         User::find($id)->update(['roles' => null]);
         return redirect()->route('users')->with('success','Pomyślnie usunięto użytkownikowi rolę admina');
     }
+
+    public function superShuffle() {
+        $arrNames =[];
+        foreach(User::all() as $user) {
+            $arrNames[] = $user->name;
+        }
+        shuffle($arrNames);
+        $pairs = [
+            'Magdalena' => 'Dariusz',
+            'Justyna' => 'Paweł',
+            'Barbara' => 'Edward',
+            'Beata' => 'Zbigniew',
+            'Zdzisław' => 'Grażyna'
+        ];
+        $shufflePairs = [];
+        $lostNames = [];
+        for($i=0; $i<count($arrNames); $i++) {
+            $intWhile = 0;
+            do {
+                $chosenName = $this->getRandomName($arrNames);
+                $number = 0;
+                foreach($pairs as $name1 => $name2) {
+                    if([$chosenName => $arrNames[$i]] == [$name1 => $name2] || [$chosenName => $arrNames[$i]] == [$name2 => $name1]) {
+                        $number = 1;
+                        continue;
+                    }
+                }
+                $intWhile++;
+                if($intWhile > 2.5*count($arrNames)) {
+                    break;
+                }
+            } while($chosenName == $arrNames[$i] || in_array($chosenName,$lostNames) || $number == 1);
+            if($intWhile > 2.5*count($arrNames)) {
+                break;
+            }
+            $shufflePairs[$arrNames[$i]] = $chosenName;
+            $lostNames[] = $shufflePairs[$arrNames[$i]];
+        }
+        if(count($shufflePairs) != count($arrNames) ) {
+            return redirect(\Request::url());
+        }
+
+        dd($shufflePairs);
+    }
 }

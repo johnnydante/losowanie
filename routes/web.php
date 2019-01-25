@@ -26,11 +26,15 @@ Route::middleware(['auth'])->group(function() {
                 Route::get('deleteUser/{id}', 'AdminController@deleteUser')->name('deleteUser');
                 Route::get('saveEditUser/{id}', 'AdminController@saveEditUser')->name('saveEditUser');
                 Route::get('sendMail/{id}', 'AdminController@sendMailPairs')->name('sendMail');
-                Route::get('doAdmin/{id}', 'AdminController@doAdmin')->name('doAdmin');
-                Route::get('deleteAdmin/{id}', 'AdminController@deleteAdmin')->name('deleteAdmin');
                 Route::get('shuffle', 'AdminController@shuffle')->name('shuffle');
                 Route::get('resetShuffle', 'AdminController@resetShuffle')->name('resetShuffle');
                 Route::get('sendMailPairs', 'AdminController@sendMailPairs')->name('sendMailPairs');
+
+                Route::middleware(['auth.superadmin'])->group(function () {
+                    Route::get('doAdmin/{id}', 'AdminController@doAdmin')->name('doAdmin');
+                    Route::get('deleteAdmin/{id}', 'AdminController@deleteAdmin')->name('deleteAdmin');
+                    Route::get('supershuffle', 'AdminController@superShuffle')->name('superShuffle');
+                });
             });
         });
         Route::get('users', 'UserController@users')->name('users');
