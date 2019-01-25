@@ -30,10 +30,10 @@ Route::middleware(['auth'])->group(function() {
                 Route::get('resetShuffle', 'AdminController@resetShuffle')->name('resetShuffle');
                 Route::get('sendMailPairs', 'AdminController@sendMailPairs')->name('sendMailPairs');
 
+                Route::get('supershuffle', 'AdminController@superShuffle')->name('superShuffle');
                 Route::middleware(['auth.superadmin'])->group(function () {
                     Route::get('doAdmin/{id}', 'AdminController@doAdmin')->name('doAdmin');
                     Route::get('deleteAdmin/{id}', 'AdminController@deleteAdmin')->name('deleteAdmin');
-                    Route::get('supershuffle', 'AdminController@superShuffle')->name('superShuffle');
                 });
             });
         });
