@@ -54,11 +54,9 @@
                                     <button type="submit" class="btn btn-outline-primary" >Uczestnicy losowania</button>
                                 </form>
                             @else
-                                @if(Auth::user()->canTakeName())
                                     <form action="{{ route('users') }}" method="get" style="float: left; margin-left: 10px;">
                                         <button type="submit" class="btn btn-outline-success" >Uczestnicy losowania</button>
                                     </form>
-                                @endif
                             @endif
                             @if(Auth::user()->isAdmin())
 
