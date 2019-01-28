@@ -33,7 +33,7 @@
 												</td>
 
 												<td style="color: darkblue; padding-left: 30px;">
-													<b>{{ $points[$key] ? $points[$key] : '-' }}</b>
+													<b>{{ $user->points > 0 ? $user->points : '-' }}</b>
 												</td>
 											</tr>
 										@endforeach

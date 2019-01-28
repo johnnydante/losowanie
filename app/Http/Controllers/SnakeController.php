@@ -20,12 +20,8 @@ class SnakeController extends Controller
     }
 
     public function ranking() {
-        $users = User::all();
-        $points = [];
-        foreach ($users as $user) {
-            $points[] = $user->points;
-        }
-        rsort($points);
-        return view('ranking')->with(compact('users', 'points'));
+        $users = User::orderBy('points', 'desc')->get();
+
+        return view('ranking')->with(compact('users'));
     }
 }
