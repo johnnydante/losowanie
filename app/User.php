@@ -8,13 +8,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use App\Notifications\ResetPassword as ResetPasswordNotification;
+use App\Snake;
 
 class User extends Authenticatable
 {
     use Notifiable;
 
     protected $fillable = [
-        'name', 'email', 'password', 'roles'
+        'name', 'email', 'password', 'roles', 'points'
     ];
 
 
@@ -136,5 +137,13 @@ class User extends Authenticatable
             return true;
         }
         return false;
+    }
+
+    public function getSnakeScore() {
+        $points = $this->points;
+        if($points == null) {
+            $points = 0;
+        }
+        return $points;
     }
 }
