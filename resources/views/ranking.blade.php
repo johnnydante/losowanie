@@ -25,7 +25,7 @@
 										</tr>
 									</thead>
 									<tbody>
-										@foreach($users as $id => $user)
+										@foreach($users as $key => $user)
 											<tr>
 
 												<td style="padding-left: 20px;">
@@ -33,7 +33,7 @@
 												</td>
 
 												<td style="color: darkblue; padding-left: 30px;">
-													<b>{{ $user->getSnakeScore() }}</b>
+													<b>{{ $points[$key] ? $points[$key] : '-' }}</b>
 												</td>
 											</tr>
 										@endforeach

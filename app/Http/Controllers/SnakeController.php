@@ -21,6 +21,11 @@ class SnakeController extends Controller
 
     public function ranking() {
         $users = User::all();
-        return view('ranking')->with('users', $users);
+        $points = [];
+        foreach ($users as $user) {
+            $points[] = $user->points;
+        }
+        rsort($points);
+        return view('ranking')->with(compact('users', 'points'));
     }
 }

@@ -41,7 +41,7 @@
 										</tr>
 									</thead>
 									<tbody>
-										@foreach($users as $id => $user)
+										@foreach($users as $key => $user)
 											<tr>
 												@if(Auth::user()->isAdmin())
 													<th scope="row" class="tableId">{{ $user->id }}</th>
