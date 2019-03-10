@@ -31,7 +31,8 @@ class AdminController extends Controller
             'Justyna' => 'Paweł',
             'Barbara' => 'Edward',
             'Beata' => 'Zbigniew',
-            'Zdzisław' => 'Grażyna'
+            'Zdzisław' => 'Grażyna',
+            'Damian' => 'Joanna'
         ];
         $shufflePairs = [];
         $lostNames = [];
