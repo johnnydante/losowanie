@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\MyEmailRequest;
 use App\Http\Requests\SuggestionRequest;
 use App\Suggestions;
 use Illuminate\Support\Facades\Auth;
@@ -114,5 +115,11 @@ class UserController extends Controller
 		return redirect()->route('home')->with('success', 'Hasło zostało zmienione');
 	}
 
+    public function myEmailShow() {
+        return view('auth.myEmail');
+    }
 
+    public function myEmailPost(MyEmailRequest $request) {
+       dd($request);
+    }
 }

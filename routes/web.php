@@ -47,5 +47,7 @@ Route::middleware(['auth'])->group(function() {
     });
     Route::get('changePassword', 'UserController@changePasswordShow')->name('passwordChange');
     Route::post('changePassword', 'UserController@changePasswordPost')->name('changePassword.post');
+    Route::get('myEmail', 'UserController@myEmailShow')->name('myEmail');
+//    Route::post('myEmail', 'UserController@myEmailPost')->name('myEmail.post');
 });
 
