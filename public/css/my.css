@@ -178,6 +178,9 @@ body {
     color: black;
 }
 
+.my-logout:hover {
+    color: lightgray!important;
+}
 
 
 

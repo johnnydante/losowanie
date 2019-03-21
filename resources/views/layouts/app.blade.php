@@ -35,7 +35,10 @@
         @auth
             <nav id="navi" class="navbar navbar-expand-md navbar-light navbar-laravel">
                 <div class="container" >
-                    <a href="{{ route('home') }}"> <i class="fas fa-gift logo" style="float: left; margin-left: 20px; font-size: 32px; margin-right: 20px; color: #00bb4d"></i></a>
+                    <a href="{{ route('home') }}">
+                        <i class="fas fa-gift logo" style="float: left; margin-top: 2px; font-size: 32px; margin-right: 20px; color: #00bb4d"></i>
+                        <span style="margin-left: -10px;" class="btn btn btn-outline-success">Strona główna</span>
+                    </a>
 
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                         <span class="navbar-toggler-icon"></span>
@@ -55,7 +58,7 @@
                                 </form>
                             @else
                                     <form action="{{ route('users') }}" method="get" style="float: left; margin-left: 10px;">
-                                        <button type="submit" class="btn btn-outline-success" >Uczestnicy losowania</button>
+                                        <button type="submit" class="btn btn-outline-primary" >Uczestnicy losowania</button>
                                     </form>
                             @endif
                             <?php
@@ -86,10 +89,11 @@
                             @endif
                         </ul>
                         @if(Auth::user()->logged > 1)
-                            <a class="btn btn-outline-dark" href="{{ route('logout') }}" style="float: left; margin-left: 10px;"
+                            <a  href="{{ route('logout') }}"  class="btn btn btn-outline-dark" style="float: left; min-width: 108px; margin-left: 10px;"
                                onclick="event.preventDefault();
                                                  document.getElementById('logout-form').submit();">
-                                {{ __('Wyloguj') }}
+                                <i class="fas fa-power-off  my-logout" style="margin-top: 1px; margin-left: -15px; font-size: 22px; color: #333333"></i>
+                                <span style="float: left; margin-right: 20px; " >Wyloguj</span>
                             </a>
 
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

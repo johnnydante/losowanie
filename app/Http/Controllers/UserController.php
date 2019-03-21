@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ChangeMailRequest;
 use App\Http\Requests\MyEmailRequest;
 use App\Http\Requests\SuggestionRequest;
 use App\Suggestions;
@@ -119,7 +120,15 @@ class UserController extends Controller
         return view('auth.myEmail');
     }
 
+    public function changeMailShow() {
+        return view('auth.changeMail');
+    }
+
     public function myEmailPost(MyEmailRequest $request) {
-       dd($request);
+        $user = Auth::user();
+        $user->email = $request->get('email');
+        $user->save();
+
+        return redirect()->route('myEmail')->with('success', 'E-mail został zmieniony');
     }
 }
