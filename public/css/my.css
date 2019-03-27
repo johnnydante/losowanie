@@ -179,7 +179,11 @@ body {
 }
 
 .my-logout:hover {
-    color: lightgray!important;
+    color: darkred!important;
+}
+
+.main-page-btn:hover {
+    color: dodgerblue!important;
 }
 
 
