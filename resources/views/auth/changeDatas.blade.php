@@ -13,7 +13,7 @@
                             </a>
                         </div>
 
-                        <div class="card-body inner">
+                        <div class="card-body inner-datas">
                             @include('flash-messages')
                             <form method="post" action="{{ route('myDatas.post') }}">
                                 @csrf

@@ -16,17 +16,18 @@
                             </a>
                         </div>
 
-                        <div class="card-body inner">
+                        <div class="card-body inner-datas">
                             @include('flash-messages')
                             <p style="text-align: left; font-size: 18px; margin-left: 20px;">
                                 <b>Imię: &nbsp;&nbsp;</b> {{ Auth::user()->name }}
                             </p>
                             <p style="text-align: left; font-size: 18px; margin-top: 10px; margin-left: 20px;">
-                                <b>E-mail: &nbsp;&nbsp;</b> {{ Auth::user()->email }}
+                                <b>E-mail: &nbsp;&nbsp;</b><br>
+                                {{ Auth::user()->email }}
                             </p>
                             <p style="text-align: left; font-size: 18px; margin-top: 10px; margin-left: 20px;">
-                                <b>Urodziny: &nbsp;&nbsp;</b>
-                                {!! Auth::user()->birthday ? date("d. m. Y", strtotime(Auth::user()->birthday)).'r. &nbsp;&nbsp;( '.\Globals::getDayOfWeek(Auth::user()->birthday).' )' : '-' !!}
+                                <b>Urodziny: &nbsp;&nbsp;</b><br>
+                                {!! Auth::user()->birthday ? date("d. m. Y", strtotime(Auth::user()->birthday)).'r. &nbsp;('.\Globals::getDayOfWeek(Auth::user()->birthday).')' : '-' !!}
                             </p>
 
                         </div>

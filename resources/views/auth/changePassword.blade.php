@@ -15,7 +15,7 @@
                             @endif
                         </div>
 
-                        <div class="card-body inner">
+                        <div class="card-body inner-datas">
                             @include('flash-messages')
                             <form method="POST" action="{{ route('changePassword.post') }}">
                                 @csrf
@@ -62,12 +62,10 @@
                                     </div>
                                 </div>
 
-                                <div class="row" >
-                                    <div class="col-md-8 offset-md-4" >
-                                        <button type="submit" class="btn btn-primary" style="width: 170px;">
-                                            {{ __('Zapisz zmiany') }}
-                                        </button>
-                                    </div>
+                                <div style="text-align: center;">
+                                    <button type="submit" class="btn btn-primary">
+                                        {{ __('Zapisz zmiany') }}
+                                    </button>
                                 </div>
                             </form>
                         </div>

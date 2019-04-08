@@ -88,6 +88,10 @@ body {
     background-size: cover;
 }
 
+.inner-datas {
+    background-image: url('../images/snake.jpg');
+}
+
 .btn {
     font-weight: bold;
     border-style: none;
