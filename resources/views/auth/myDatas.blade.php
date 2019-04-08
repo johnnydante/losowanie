@@ -7,10 +7,13 @@
                 <div class="col-md-5">
                     <div class="card">
                         <div class="card-header">
-                            <h5 style="float: left; margin-top: 10px;">{{ __('Moje dane') }}</h5>
+                            <h5 style="float: left; margin-top: 10px;">{{ __('Moje konto') }}</h5>
 {{--                            <a href='{{ route('home') }}' class="btn btn-outline-primary" >
                                 {{ __('Powrót') }}
                             </a>--}}
+                            <form action="{{ route('passwordChange') }}" method="get">
+                                <button type="submit" class="btn btn-outline-primary" style="float: right; margin-top: 3px; margin-left: 15px;">Zmień hasło</button>
+                            </form>
                             <a href='{{ route('changeDatas') }}' class="btn btn-outline-primary" style="float: right; margin-top: 3px;">
                                 {{ __('Edytuj dane') }}
                             </a>

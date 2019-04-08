@@ -9,7 +9,7 @@
                         <div class="card-header">
                             <h5 style="float: left; margin-top: 10px;">{{ __('Zmiana hasła') }}</h5>
                             @if(Auth::user()->logged > 1)
-                                <a href='{{ route('home') }}' class="btn btn-outline-primary" style="float: right; margin-top: 3px;">
+                                <a href='{{ route('myDatas') }}' class="btn btn-outline-primary" style="float: right; margin-top: 3px;">
                                     {{ __('Powrót') }}
                                 </a>
                             @endif

@@ -4,16 +4,13 @@
 	<main class="py-4">
 		<div class="container">
 			<div class="row justify-content-center">
-				<div class="col-md-8">
+				<div class="col-md-{{ Auth::user()->hasTaken ? '8' : '5'}}">
 					<div class="card">
 						@auth
 							<div class="card-header">
 								<h5 style="float: left; margin-top: 10px;">Witaj {{ Auth::user()->name }}</h5>
 								<form action="{{ route('myDatas') }}" method="get">
-									<button type="submit" class="btn btn-outline-primary" style="float: right; margin-top: 3px; margin-left: 10px;">Moje dane</button>
-								</form>
-								<form action="{{ route('passwordChange') }}" method="get">
-									<button type="submit" class="btn btn-outline-primary" style="float: right; margin-top: 3px; margin-left: 15px;">Zmień hasło</button>
+									<button type="submit" class="btn btn-outline-primary" style="float: right; margin-top: 3px; margin-left: 10px;">Moje konto</button>
 								</form>
 							</div>
 
