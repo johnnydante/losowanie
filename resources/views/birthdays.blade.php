@@ -8,7 +8,7 @@
 					<div class="card">
 						@auth
 							<div class="card-header">
-								<h5 style="float: left; margin-top: 10px;">Urodziny</h5>
+								<h5 style="float: left; margin-top: 10px;">Najbliższe urodziny</h5>
 								{{--<form action="{{ route('home') }}" method="get">
 									<button type="submit" class="btn btn-outline-primary" style="float: right; margin-right: 10px; margin-top: 3px;">Powrót</button>
 								</form>--}}
@@ -22,7 +22,7 @@
 
 											<th scope="col">Imię</th>
 
-											<th scope="col">Urodziny</th>
+											<th scope="col">Data</th>
 
 										</tr>
 									</thead>
@@ -31,7 +31,7 @@
 											<tr>
 												<td>{{ $user->name }}</td>
 
-												<td class="birthday" style="color: {{ $user->birthday ? ((date_diff(date_create(\Globals::getDateToDiff($user->birthday)),date_create(date('Y-m-d')))->days < 30 AND \Globals::getDateToDiff($user->birthday) >= date('Y-m-d')) ? 'red' : 'green') : 'black' }};">
+												<td class="birthday" style="color: {{ $user->birthday ? ((date_diff(date_create(\Globals::getDateToDiff($user->birthday)),date_create(date('Y-m-d')))->days < 30 AND \Globals::getDateToDiff($user->birthday) >= date('Y-m-d')) ? 'red' : 'blue') : 'black' }};">
                                                     {!! $user->birthday ?
                                                         (\Globals::getDateToDiff($user->birthday) == date('Y-m-d') ?
                                                         '<b>TO DZISIAJ !</b>' :
