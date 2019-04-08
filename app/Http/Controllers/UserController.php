@@ -20,8 +20,8 @@ class UserController extends Controller
     }
 
     public function birthdays() {
-        return view('birthdays')->with('users',User::all());
-    }
+        return view('birthdays')->with('users',User::orderBy('daysToBirthday')->get());
+    }   
 
     public function getPair() {
         $user = Auth::user();

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 
@@ -42,6 +43,15 @@ class LoginController extends Controller
     {
         $user->logged++;
         $user->save();
-
+        foreach (User::all() as $user) {
+            if(\Globals::getDateToDiff($user->birthday) > date('Y-m-d')) {
+                $user->daysToBirthday = date_diff(date_create(\Globals::getDateToDiff($user->birthday)),date_create(date('Y-m-d')))->days;
+            } elseif($user->birthday == null) {
+                $user->daysToBirthday = 444;
+            }else {
+                $user->daysToBirthday = 365 - date_diff(date_create(\Globals::getDateToDiff($user->birthday)),date_create(date('Y-m-d')))->days;
+            }
+            $user->save();
+        }
     }
 }

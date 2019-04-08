@@ -88,11 +88,11 @@
                             @endif
                         </ul>
                         @if(Auth::user()->logged > 1)
-                            <a  href="{{ route('logout') }}"  class="btn btn btn-outline-dark" style="float: left; min-width: 108px; margin-left: 5px;"
+                            <a  href="{{ route('logout') }}"  class="btn btn btn-outline-dark" style="float: left; max-height: 36px; min-width: 108px; margin-left: 5px;"
                                onclick="event.preventDefault();
                                                  document.getElementById('logout-form').submit();">
                                 <i class="fas fa-power-off  my-logout" style="margin-top: 1px; margin-left: -15px; font-size: 22px; color: #333333"></i>
-                                <span style="float: left; margin-right: 20px; " >Wyloguj</span>
+                                <span style="float: left; margin-right: 20px;">Wyloguj</span>
                             </a>
 
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
