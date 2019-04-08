@@ -90,6 +90,7 @@ body {
 
 .inner-datas {
     background-image: url('../images/snake.jpg');
+    background-size: auto;
 }
 
 .btn {
