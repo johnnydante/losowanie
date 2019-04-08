@@ -9,9 +9,9 @@
 						@auth
 							<div class="card-header">
 								<h5 style="float: left; margin-top: 10px;">Snake</h5>
-									<form action="{{ route('home') }}" method="get">
+									{{--<form action="{{ route('home') }}" method="get">
 										<button type="submit" class="btn btn-outline-primary" style="float: right; margin-top: 3px;">Powrót</button>
-									</form>
+									</form>--}}
                                     <form action="{{ route('ranking') }}" method="get">
                                         <button type="submit" class="btn btn-outline-success" style=" margin-right: 15px; float: right; margin-top: 3px;">Ranking</button>
                                     </form>

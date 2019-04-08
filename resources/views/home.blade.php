@@ -9,8 +9,8 @@
 						@auth
 							<div class="card-header">
 								<h5 style="float: left; margin-top: 10px;">Witaj {{ Auth::user()->name }}</h5>
-								<form action="{{ route('myEmail') }}" method="get">
-									<button type="submit" class="btn btn-outline-primary" style="float: right; margin-top: 3px; margin-left: 10px;">Mój e-mail</button>
+								<form action="{{ route('myDatas') }}" method="get">
+									<button type="submit" class="btn btn-outline-primary" style="float: right; margin-top: 3px; margin-left: 10px;">Moje dane</button>
 								</form>
 								<form action="{{ route('passwordChange') }}" method="get">
 									<button type="submit" class="btn btn-outline-primary" style="float: right; margin-top: 3px; margin-left: 15px;">Zmień hasło</button>

@@ -38,6 +38,7 @@ Route::middleware(['auth'])->group(function() {
             });
         });
         Route::get('users', 'UserController@users')->name('users');
+        Route::get('birthdays', 'UserController@birthdays')->name('birthdays');
         Route::get('getPair', 'UserController@getPair')->name('getPair');
         Route::post('suggest', 'UserController@postSuggestion')->name('postSuggestion');
         Route::get('{suggest}/change', 'UserController@changeSuggestion')->name('changeOneSuggest');
@@ -47,8 +48,8 @@ Route::middleware(['auth'])->group(function() {
     });
     Route::get('changePassword', 'UserController@changePasswordShow')->name('passwordChange');
     Route::post('changePassword', 'UserController@changePasswordPost')->name('changePassword.post');
-    Route::get('myEmail', 'UserController@myEmailShow')->name('myEmail');
-    Route::get('changeMail', 'UserController@changeMailShow')->name('changeMail');
-    Route::post('myEmail', 'UserController@myEmailPost')->name('myEmail.post');
+    Route::get('myDatas', 'UserController@myDatasShow')->name('myDatas');
+    Route::get('changeDatas', 'UserController@changeDatasShow')->name('changeDatas');
+    Route::post('myDatas', 'UserController@myDatasPost')->name('myDatas.post');
 });
 

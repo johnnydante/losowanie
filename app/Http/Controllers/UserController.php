@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ChangeMailRequest;
-use App\Http\Requests\MyEmailRequest;
+use App\Http\Requests\DatasRequest;
 use App\Http\Requests\SuggestionRequest;
 use App\Suggestions;
 use Illuminate\Support\Facades\Auth;
@@ -18,6 +17,10 @@ class UserController extends Controller
 
     public function users() {
         return view('admin.users')->with('users',User::all());
+    }
+
+    public function birthdays() {
+        return view('birthdays')->with('users',User::all());
     }
 
     public function getPair() {
@@ -116,19 +119,21 @@ class UserController extends Controller
 		return redirect()->route('home')->with('success', 'Hasło zostało zmienione');
 	}
 
-    public function myEmailShow() {
-        return view('auth.myEmail');
+    public function myDatasShow() {
+        return view('auth.myDatas');
     }
 
-    public function changeMailShow() {
-        return view('auth.changeMail');
+    public function changeDatasShow() {
+        return view('auth.changeDatas');
     }
 
-    public function myEmailPost(MyEmailRequest $request) {
+    public function myDatasPost(DatasRequest $request) {
         $user = Auth::user();
         $user->email = $request->get('email');
+        $user->name = $request->get('name');
+        $user->birthday = $request->get('birthday');
         $user->save();
 
-        return redirect()->route('myEmail')->with('success', 'E-mail został zmieniony');
+        return redirect()->route('myDatas')->with('success', 'Dane zostały poprawnie zmienione');
     }
 }

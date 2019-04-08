@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class MyEmailRequest extends FormRequest
+class DatasRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,6 +26,8 @@ class MyEmailRequest extends FormRequest
     {
         return [
             'email' => 'required|email|unique:users,email,'.Auth::id(),
+            'name' => 'required',
+            'birthday' => 'date',
         ];
     }
 
@@ -33,6 +35,8 @@ class MyEmailRequest extends FormRequest
     {
         return [
             'email.required' => 'Musisz podać jakiś e-mail',
+            'name.required' => 'Musisz podać Imię',
+            'birthday.date' => 'Nieprawidłowy format daty',
             'email.email' => 'Podany e-mail jest nieprawidłowy',
             'email.unique' => 'Podany e-mail już jest w bazie',
         ];

@@ -4,14 +4,14 @@
 	<main class="py-4">
 		<div class="container">
 			<div class="row justify-content-center">
-				<div class="col-md-{{ Auth::user()->isAdmin() ? '8' : '6' }}">
+				<div class="col-md-{{ Auth::user()->isAdmin() ? '8' : '4' }}">
 					<div class="card">
 						@auth
 							<div class="card-header">
 								<h5 style="float: left; margin-top: 10px;">Uczestnicy losowania</h5>
-									<form action="{{ route('home') }}" method="get">
+									{{--<form action="{{ route('home') }}" method="get">
 										<button type="submit" class="btn btn-outline-primary" style="float: right; margin-right: 10px; margin-top: 3px;">Powrót</button>
-									</form>
+									</form>--}}
 								@if(Auth::user()->isAdmin())
 									<form action="{{ route('register') }}" method="get">
 										<button id="addUser" type="submit" class="btn btn-outline-success" style="float: right; margin-right: 20px; margin-top: 3px;">Dodaj uczestnika</button>
@@ -26,8 +26,6 @@
 										<tr>
 											@if(Auth::user()->isAdmin())
 												<th scope="col">ID</th>
-											@else
-												<th scope="col"></th>
 											@endif
 											<th scope="col">Imię</th>
 											@if(Auth::user()->isAdmin())
@@ -44,9 +42,7 @@
 										@foreach($users as $key => $user)
 											<tr>
 												@if(Auth::user()->isAdmin())
-													<th scope="row" class="tableId">{{ $user->id }}</th>
-												@else
-													<th scope="row"></th>
+													<th scope="row" class="tableId" >{{ $user->id }}</th>
 												@endif
 												<td>
 													{{ $user->name }}
