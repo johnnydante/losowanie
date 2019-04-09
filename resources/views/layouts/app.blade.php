@@ -36,7 +36,7 @@
             <nav id="navi" class="navbar navbar-expand-md navbar-light navbar-laravel">
                 <div class="container" >
                     <a href="{{ route('home') }}" class="btn btn-outline-success" style="max-height: 36px; max-width: 166px;">
-                        <i class="fas fa-gift logo main-page-btn" style="float: left; margin-top: -2px; font-size: 28px; color: #00bb4d; padding: -5px;"></i>
+                        <i class="fas fa-gift logo main-page-btn" style="float: left; margin-top: -4px; font-size: 28px; color: #00bb4d; padding: -5px;"></i>
                         <span style="margin-top: -6px;" class="btn">Strona główna</span>
                     </a>
 
