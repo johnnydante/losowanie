@@ -35,7 +35,7 @@
         @auth
             <nav id="navi" class="navbar navbar-expand-md navbar-light navbar-laravel">
                 <div class="container" >
-                    <a href="{{ route('home') }}" class="btn btn-outline-success" style="max-height: 36px; max-width: 160px;">
+                    <a href="{{ route('home') }}" class="btn btn-outline-success" style="max-height: 36px; max-width: 166px;">
                         <i class="fas fa-gift logo main-page-btn" style="float: left; margin-top: -2px; font-size: 28px; color: #00bb4d; padding: -5px;"></i>
                         <span style="margin-top: -6px;" class="btn">Strona główna</span>
                     </a>
@@ -88,7 +88,7 @@
                             @endif
                         </ul>
                         @if(Auth::user()->logged > 1)
-                            <a  href="{{ route('logout') }}"  class="btn btn btn-outline-dark" style="float: left; max-height: 36px; min-width: 108px; margin-left: 5px;"
+                            <a  href="{{ route('logout') }}"  class="btn btn btn-outline-dark" style="float: left; max-height: 36px; min-width: 112px; margin-left: 5px;"
                                onclick="event.preventDefault();
                                                  document.getElementById('logout-form').submit();">
                                 <i class="fas fa-power-off  my-logout" style="margin-top: 1px; margin-left: -15px; font-size: 22px; color: #333333"></i>
