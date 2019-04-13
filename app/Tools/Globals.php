@@ -186,8 +186,10 @@ class Globals
             $nextBirthdayYear = date("Y") + 1;
         }
         $age = $nextBirthdayYear - $birthdayYear;
-        $string = ' lat';
         switch ($age) {
+            case 1:
+                $string = ' roczek';
+                break;
             case 2:
                 $string = ' lata';
                 break;
