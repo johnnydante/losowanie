@@ -21,7 +21,7 @@
 							<div class="card-body inner-birthday">
 
 								@include('flash-messages')
-								<table class="table">
+								<table class="table" style="margin-bottom: 0px;">
 									<thead>
 										<tr>
 
@@ -41,7 +41,7 @@
                                                         (\Globals::getDateToDiff($user->birthday) == date('Y-m-d') ?
                                                         '<b>TO DZISIAJ !</b>' :
                                                         '<b>'.\Globals::getBirthdayDate($user->birthday).'</b>') :
-                                                    '<i>nie podano</i>'  !!}
+                                                    '<i>nie podano</i>'  !!} {{ $user->roles == 'child' ? \Globals::getChildrenAge($user->birthday) : '' }}
                                                 </td>
 
 											</tr>

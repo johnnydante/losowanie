@@ -178,4 +178,27 @@ class Globals
         }
         return false;
     }
+
+    public function getChildrenAge($date) {
+        $birthdayYear = substr($date, 0, 4);
+        $nextBirthdayYear = date("Y");
+        if(\Globals::getDateToDiff($date) < date('Y-m-d')) {
+            $nextBirthdayYear = date("Y") + 1;
+        }
+        $age = $nextBirthdayYear - $birthdayYear;
+        $string = ' lat';
+        switch ($age) {
+            case 2:
+                echo ' lata';
+                break;
+            case 3:
+                echo ' lata';
+                break;
+            case 4:
+                echo ' lata';
+                break;
+        }
+
+        return '('.$age.$string.')';
+    }
 }
