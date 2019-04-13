@@ -24,15 +24,15 @@
 								<table class="table">
 									<thead>
 										<tr>
-											@if(Auth::user()->isAdmin())
+											@if(Auth::user()->isAdmin() AND !\Globals::isMobile())
 												<th scope="col">ID</th>
 											@endif
 											<th scope="col">Imię</th>
-											@if(Auth::user()->isAdmin())
+											@if(Auth::user()->isAdmin() AND !\Globals::isMobile())
 												<th scope="col">Email</th>
 											@endif
 											<th scope="col">Wylosował/a?</th>
-											@if(Auth::user()->isAdmin())
+											@if(Auth::user()->isAdmin() AND !\Globals::isMobile())
 												<th scope="col">Akcje</th>
 											@endif
 
@@ -41,7 +41,7 @@
 									<tbody>
 										@foreach($users as $key => $user)
 											<tr>
-												@if(Auth::user()->isAdmin())
+												@if(Auth::user()->isAdmin() AND !\Globals::isMobile())
 													<th scope="row" class="tableId" >{{ $user->id }}</th>
 												@endif
 												<td>
@@ -50,7 +50,7 @@
 														<span style="color: darkgreen;">(A) </span>
 													@endif
 												</td>
-												@if(Auth::user()->isAdmin())
+												@if(Auth::user()->isAdmin() AND !\Globals::isMobile())
 													<td class="tableMail">
 														<span class="oldMail">{{ $user->email }}</span>
 														<form class="editUserForm" id="{{ $user->id }}" action="{{ route('saveEditUser', ['id' => $user->id]) }}" method="get">
@@ -81,7 +81,7 @@
 												@else
 														<td style="padding-left: 40px;"> - </td>
 												@endif
-												@if(Auth::user()->isAdmin())
+												@if(Auth::user()->isAdmin() AND !\Globals::isMobile())
 													<td>
 														@if(Auth::user()->isSuperAdmin() && $user->roles != 'admin')
 															<span class="editUser">
