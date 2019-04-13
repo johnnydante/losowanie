@@ -10,7 +10,7 @@
 							<div class="card-header">
 								<h5 style="float: left; margin-top: 10px;">Dzieciaki</h5>
 									<form action="{{ route('birthdays') }}" method="get">
-										<button type="submit" class="btn btn-outline-primary" style="float: right; margin-right: 10px; margin-top: 3px;">Powrót</button>
+										<button type="submit" class="btn btn-outline-primary" style="float: right; margin-top: 3px;">Powrót</button>
 									</form>
 								@if(Auth::user()->isAdmin())
 									<form action="{{ route('showRegisterChildren') }}" method="get">
