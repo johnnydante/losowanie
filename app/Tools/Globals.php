@@ -157,16 +157,16 @@ class Globals
     }
 
     public function getColorForBirthday($birthday) {
-        $color = 'green';
+        $color = '#007b00';
         if(date_diff(date_create($this->getDateToDiff($birthday)),date_create(date('Y-m-d')))->days < 30
             AND $this->getDateToDiff($birthday) >= date('Y-m-d')) {
-            $color = 'red';
+            $color = '#ee0600';
         } elseif(date_diff(date_create($this->getDateToDiff($birthday)),date_create(date('Y-m-d')))->days < 90
             AND $this->getDateToDiff($birthday) >= date('Y-m-d')) {
-            $color = 'purple';
+            $color = '#a500a5';
         } elseif(date_diff(date_create($this->getDateToDiff($birthday)),date_create(date('Y-m-d')))->days < 180
             AND $this->getDateToDiff($birthday) >= date('Y-m-d')) {
-            $color = 'blue';
+            $color = '#0000da';
         }
         return $color;
     }

@@ -20,7 +20,7 @@ class SnakeController extends Controller
     }
 
     public function ranking() {
-        $users = User::orderBy('points', 'desc')->get();
+        $users = User::where('roles', '!=', 'child')->orderBy('points', 'desc')->get();
 
         return view('ranking')->with(compact('users'));
     }

@@ -65,10 +65,15 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $roles = isset($data['roles']) ? $data['roles'] : 'user';
+        $birthday = isset($data['birthday']) ? $data['birthday'] : null;
+        $password =  isset($data['roles']) ? '*' : Hash::make('mojehaslo');
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => Hash::make('mojehaslo'),
+            'roles' => $roles,
+            'birthday' => $birthday,
+            'password' => $password,
         ]);
     }
 
@@ -87,8 +92,49 @@ class RegisterController extends Controller
         event(new Registered($user = $this->create($request->all())));
 
  //       $this->guard()->login($user);
-
+        foreach (User::all() as $user) {
+            if(\Globals::getDateToDiff($user->birthday) > date('Y-m-d')) {
+                $user->daysToBirthday = date_diff(date_create(\Globals::getDateToDiff($user->birthday)),date_create(date('Y-m-d')))->days;
+            } elseif($user->birthday == null) {
+                $user->daysToBirthday = 444;
+            }else {
+                $user->daysToBirthday = 365 - date_diff(date_create(\Globals::getDateToDiff($user->birthday)),date_create(date('Y-m-d')))->days;
+            }
+            $user->save();
+        }
         return $this->registered($request, $user)
             ?: redirect($this->redirectPath())->with('success', 'Pomyślnie dodano uczestnika');
+    }
+
+    public function showRegisterChildren()
+    {
+        return view('auth.registerChildren');
+    }
+
+    public function registerChildren(Request $request)
+    {
+        $this->redirectTo = 'admin/children';
+        $int = User::orderBy('id', 'desc')->first()->id + 1;
+        $request->request->add([
+            'email' => 'children'.$int.'@children.com',
+            'roles' => 'child'
+        ]);
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+
+        //       $this->guard()->login($user);
+        foreach (User::all() as $user) {
+            if(\Globals::getDateToDiff($user->birthday) > date('Y-m-d')) {
+                $user->daysToBirthday = date_diff(date_create(\Globals::getDateToDiff($user->birthday)),date_create(date('Y-m-d')))->days;
+            } elseif($user->birthday == null) {
+                $user->daysToBirthday = 444;
+            }else {
+                $user->daysToBirthday = 365 - date_diff(date_create(\Globals::getDateToDiff($user->birthday)),date_create(date('Y-m-d')))->days;
+            }
+            $user->save();
+        }
+        return $this->registered($request, $user)
+            ?: redirect($this->redirectPath())->with('success', 'Pomyślnie dodano dzieciaka');
     }
 }

@@ -14,7 +14,7 @@
 									</form>--}}
 								@if(Auth::user()->isAdmin())
 									<form action="{{ route('register') }}" method="get">
-										<button id="addUser" type="submit" class="btn btn-outline-success" style="float: right; margin-right: 20px; margin-top: 3px;">Dodaj uczestnika</button>
+										<button id="addUser" type="submit" class="btn btn-outline-success" style="float: right; margin-top: 3px;">Dodaj uczestnika</button>
 									</form>
 								@endif
 							</div>

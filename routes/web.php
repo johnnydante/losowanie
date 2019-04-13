@@ -23,8 +23,13 @@ Route::middleware(['auth'])->group(function() {
         Route::middleware(['auth.admin'])->group(function () {
             Route::group(['prefix' => 'admin'], function () {
                 Route::get('addUser', 'AdminController@addUser')->name('addUser');
+                Route::get('children', 'AdminController@showChildren')->name('children');
+                Route::get('registerChildren', 'Auth\RegisterController@showRegisterChildren')->name('showRegisterChildren');
+                Route::post('registerChildren', 'Auth\RegisterController@registerChildren')->name('registerChildren');
                 Route::get('deleteUser/{id}', 'AdminController@deleteUser')->name('deleteUser');
+                Route::get('deleteChildren/{id}', 'AdminController@deleteChildren')->name('deleteChildren');
                 Route::get('saveEditUser/{id}', 'AdminController@saveEditUser')->name('saveEditUser');
+                Route::get('saveEditUserBirthday/{id}', 'AdminController@saveEditUserBirthday')->name('saveEditUserBirthday');
                 Route::get('sendMail/{id}', 'AdminController@sendMailPairs')->name('sendMail');
                 Route::get('shuffle', 'AdminController@shuffle')->name('shuffle');
                 Route::get('resetShuffle', 'AdminController@resetShuffle')->name('resetShuffle');

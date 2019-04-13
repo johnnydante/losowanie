@@ -12,6 +12,11 @@
 								{{--<form action="{{ route('home') }}" method="get">
 									<button type="submit" class="btn btn-outline-primary" style="float: right; margin-right: 10px; margin-top: 3px;">Powrót</button>
 								</form>--}}
+								@if(Auth::user()->isAdmin())
+									<form action="{{ route('children') }}" method="get">
+										<button id="children" type="submit" class="btn btn-outline-success" style="float: right; margin-top: 3px;">Dzieciaki</button>
+									</form>
+								@endif
 							</div>
 							<div class="card-body inner-users">
 
@@ -48,10 +53,10 @@
 									Legenda:
 								</b>
 								<b>
-									<div style="color: red;"> - mniej niż 1 miesiąc do urodzin</div>
+									<div style="color: #dc0600;"> - mniej niż 1 miesiąc do urodzin</div>
 									<div style="color: purple;"> - mniej niż 3 miesiące do urodzin</div>
-									<div style="color: blue;"> - mniej niż 6 miesięcy do urodzin</div>
-									<div style="color: green;"> - ponad pół roku do urodzin</div>
+									<div style="color: #0000b8;"> - mniej niż 6 miesięcy do urodzin</div>
+									<div style="color: #006700;"> - ponad pół roku do urodzin</div>
 								</b>
 							</div>
 						@endauth

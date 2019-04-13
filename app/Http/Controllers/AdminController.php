@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ChangeBirthdayRequest;
 use App\Http\Requests\ChangeMailRequest;
 use App\Mail\Invitation;
 use App\Mail\SecondMail;
@@ -22,7 +23,7 @@ class AdminController extends Controller
 
     public function shuffle() {
         $arrNames =[];
-        foreach(User::all() as $user) {
+        foreach(User::where('roles', '!=', 'child')->get() as $user) {
             $arrNames[] = $user->name;
         }
         shuffle($arrNames);
@@ -76,7 +77,7 @@ class AdminController extends Controller
             }
             DB::commit();
             return redirect()->back()->with('success','Pomyślnie przetasowano');
-        } catch (\Exceptio $e) {
+        } catch (\Exception $e) {
             Log::error($e->getMessage());
             Log::error($e->getTraceAsString());
             DB::rollBack();
@@ -95,7 +96,7 @@ class AdminController extends Controller
             DB::beginTransaction();
             ShuffledPairs::truncate();
             Suggestions::truncate();
-            foreach (User::all() as $user) {
+            foreach (User::where('roles', '!=', 'child')->get() as $user) {
                 $user->hasTaken = 0;
                 $user->save();
             }
@@ -118,6 +119,12 @@ class AdminController extends Controller
         return redirect()->route('users')->with('success','Użytkownik został usunięty');
     }
 
+    public function deleteChildren($id) {
+        $user = User::find($id);
+        $user->delete();
+        return redirect()->route('children')->with('success','Dzieciak został usunięty');
+    }
+
     public function sendMailPairs($id = null) {
         if($id) {
             $user = User::find($id);
@@ -129,7 +136,7 @@ class AdminController extends Controller
 
             return redirect()->back()->with('success','Pomyślnie wysłano e-mail do tego uczestnika');
         }
-        foreach (User::all() as $user) {
+        foreach (User::where('roles', '!=', 'child')->get() as $user) {
             if($user->logged == null) {
                 Mail::to($user->email)->send(new Invitation());
             } else {
@@ -144,6 +151,11 @@ class AdminController extends Controller
         return redirect()->route('users')->with('success','Pomyślnie edytowano adres e-mail');
     }
 
+    public function saveEditUserBirthday(ChangeBirthdayRequest $request, $id) {
+        User::find($id)->update(['birthday' => $request->get('birthday')]);
+        return redirect()->route('children')->with('success','Pomyślnie edytowano urodziny dzieciaka');
+    }
+
     public function doAdmin($id) {
         User::find($id)->update(['roles' => 'admin']);
         return redirect()->route('users')->with('success','Pomyślnie nadano użytkownikowi rolę admina');
@@ -156,7 +168,7 @@ class AdminController extends Controller
 
     public function superShuffle() {
         $arrNames =[];
-        foreach(User::all() as $user) {
+        foreach(User::where('roles', '!=', 'child')->get() as $user) {
             $arrNames[] = $user->name;
         }
         shuffle($arrNames);
@@ -196,5 +208,10 @@ class AdminController extends Controller
         }
 
         dd($shufflePairs);
+    }
+
+    public function showChildren() {
+        $children = User::where('roles','child')->get();
+        return view('admin.children', compact('children'));
     }
 }
