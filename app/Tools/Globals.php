@@ -156,4 +156,19 @@ class Globals
         return $dayOfWeek;
     }
 
+    public function getColorForBirthday($birthday) {
+        $color = 'green';
+        if(date_diff(date_create($this->getDateToDiff($birthday)),date_create(date('Y-m-d')))->days < 30
+            AND $this->getDateToDiff($birthday) >= date('Y-m-d')) {
+            $color = 'red';
+        } elseif(date_diff(date_create($this->getDateToDiff($birthday)),date_create(date('Y-m-d')))->days < 90
+            AND $this->getDateToDiff($birthday) >= date('Y-m-d')) {
+            $color = 'purple';
+        } elseif(date_diff(date_create($this->getDateToDiff($birthday)),date_create(date('Y-m-d')))->days < 180
+            AND $this->getDateToDiff($birthday) >= date('Y-m-d')) {
+            $color = 'blue';
+        }
+        return $color;
+    }
+
 }

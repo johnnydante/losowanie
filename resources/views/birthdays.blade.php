@@ -31,7 +31,7 @@
 											<tr>
 												<td>{{ $user->name }}</td>
 
-												<td class="birthday" style="color: {{ $user->birthday ? ((date_diff(date_create(\Globals::getDateToDiff($user->birthday)),date_create(date('Y-m-d')))->days < 30 AND \Globals::getDateToDiff($user->birthday) >= date('Y-m-d')) ? 'red' : 'blue') : 'black' }};">
+												<td class="birthday" style="color: {{ $user->birthday ? \Globals::getColorForBirthday($user->birthday) : 'black' }};">
                                                     {!! $user->birthday ?
                                                         (\Globals::getDateToDiff($user->birthday) == date('Y-m-d') ?
                                                         '<b>TO DZISIAJ !</b>' :
@@ -43,6 +43,16 @@
 										@endforeach
 									</tbody>
 								</table>
+								<br>
+								<b>
+									Legenda:
+								</b>
+								<b>
+									<div style="color: red;"> - mniej niż 1 miesiąc do urodzin</div>
+									<div style="color: purple;"> - mniej niż 3 miesiące do urodzin</div>
+									<div style="color: blue;"> - mniej niż 6 miesięcy do urodzin</div>
+									<div style="color: green;"> - ponad pół roku do urodzin</div>
+								</b>
 							</div>
 						@endauth
 					</div>

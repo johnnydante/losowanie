@@ -133,7 +133,16 @@ class UserController extends Controller
         $user->name = $request->get('name');
         $user->birthday = $request->get('birthday');
         $user->save();
-
+        foreach (User::all() as $user) {
+            if(\Globals::getDateToDiff($user->birthday) > date('Y-m-d')) {
+                $user->daysToBirthday = date_diff(date_create(\Globals::getDateToDiff($user->birthday)),date_create(date('Y-m-d')))->days;
+            } elseif($user->birthday == null) {
+                $user->daysToBirthday = 444;
+            }else {
+                $user->daysToBirthday = 365 - date_diff(date_create(\Globals::getDateToDiff($user->birthday)),date_create(date('Y-m-d')))->days;
+            }
+            $user->save();
+        }
         return redirect()->route('myDatas')->with('success', 'Dane zostały poprawnie zmienione');
     }
 }
