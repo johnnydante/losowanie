@@ -93,6 +93,11 @@ body {
     background-size: auto;
 }
 
+.inner-birthday {
+    background-image: url('../images/birthday.jpg');
+    background-size: cover;
+}
+
 .btn {
     font-weight: bold;
     border-style: none;

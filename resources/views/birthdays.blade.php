@@ -18,7 +18,7 @@
 									</form>
 								@endif
 							</div>
-							<div class="card-body inner-users">
+							<div class="card-body inner-birthday">
 
 								@include('flash-messages')
 								<table class="table">
@@ -48,14 +48,13 @@
 										@endforeach
 									</tbody>
 								</table>
-								<br>
 								<b>
 									Legenda:
 								</b>
 								<b>
-									<div style="color: #dc0600;"> - mniej niż 1 miesiąc do urodzin</div>
-									<div style="color: purple;"> - mniej niż 3 miesiące do urodzin</div>
-									<div style="color: #0000b8;"> - mniej niż 6 miesięcy do urodzin</div>
+									<div style="color: #dc0600; margin-bottom: -5px;"> - mniej niż 1 miesiąc do urodzin</div>
+									<div style="color: purple; margin-bottom: -5px;"> - mniej niż 3 miesiące do urodzin</div>
+									<div style="color: #0000b8; margin-bottom: -5px;"> - mniej niż 6 miesięcy do urodzin</div>
 									<div style="color: #006700;"> - ponad pół roku do urodzin</div>
 								</b>
 							</div>
