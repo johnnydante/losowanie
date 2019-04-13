@@ -189,13 +189,16 @@ class Globals
         $string = ' lat';
         switch ($age) {
             case 2:
-                echo ' lata';
+                $string = ' lata';
                 break;
             case 3:
-                echo ' lata';
+                $string = ' lata';
                 break;
             case 4:
-                echo ' lata';
+                $string = ' lata';
+                break;
+            default:
+                $string = ' lat';
                 break;
         }
 
