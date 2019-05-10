@@ -122,7 +122,7 @@ class Globals
     }
 
     public function getDateToDiff($date) {
-        $day = date("d",strtotime($date));
+        $day = (string)((int)date("d",strtotime($date)) +1);
         $month = date("m",strtotime($date));
         $year = date('Y');
         return $year.'-'.$month.'-'.$day;

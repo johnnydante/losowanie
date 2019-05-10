@@ -49,7 +49,7 @@ class LoginController extends Controller
             } elseif($user->birthday == null) {
                 $user->daysToBirthday = 444;
             }else {
-                $user->daysToBirthday = 365 - date_diff(date_create(\Globals::getDateToDiff($user->birthday)),date_create(date('Y-m-d')))->days;
+                $user->daysToBirthday = 365 - date_diff(date_create(\Globals::getDateToDiff($user->birthday)),date_create(date('Y-m-d')))->days ;
             }
             $user->save();
         }
