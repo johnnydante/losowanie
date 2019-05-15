@@ -19,7 +19,7 @@
 
 							<div class="card-body inner-snake">
                                 @include('flash-messages')
-								<canvas id="canvas" width="450" height="450"></canvas>
+								<canvas id="canvas" width="380" height="380"></canvas>
                                 <div style="text-align: center;">
                                     <form action="{{ route('savePoints') }}" method="post">
                                         <h3 style="margin-top: 10px; color: darkgreen">Jeśli chcesz, aby Twój Rekord został zapisany w bazie danych, przed opuszczeniem strony naciśnij poniższy przycisk</h3>
@@ -50,9 +50,10 @@
             var ctx = canvas.getContext("2d");
             var w = $("#canvas").width();
             var h = $("#canvas").height();
+            var speed;
 
             //Lets save the cell width in a variable for easy control
-            var cw = 10;
+            var cw = 20;
             var d;
             var food;
             var score;
@@ -68,11 +69,11 @@
                 create_food(); //Now we can see the food particle
                 //finally lets display the score
                 score = 0;
-
+                speed = 350;
                 //Lets move the snake now using a timer which will trigger the paint function
                 //every 60ms
                 if(typeof game_loop != "undefined") clearInterval(game_loop);
-                game_loop = setInterval(paint, 100);
+                game_loop = setInterval(paint, speed);
             }
             init();
 
@@ -143,7 +144,20 @@
                 {
                     var tail = {x: nx, y: ny};
                     score++;
+                    if(speed > 250) {
+                        speed = speed-7;
+                    } else if(speed > 150) {
+                        speed = speed-5;
+                    } else if(speed > 90){
+                        speed = speed-3;
+                    } else if(speed > 60){
+                        speed = speed-2;
+                    } else {
+                        speed = speed-1;
+                    }
 
+                    if(typeof game_loop != "undefined") clearInterval(game_loop);
+                    game_loop = setInterval(paint, speed);
                     //Create new food
                     create_food();
                 }
@@ -164,12 +178,14 @@
                 }
 
                 //Lets paint the food
-                paint_cell(food.x, food.y, "red");
+                paint_cell(food.x, food.y, "black");
                 //Lets paint the score
                 var score_text = "Punkty: " + score;
                 var high_score = "Mój rekord: " + highScore;
-                ctx.fillText(score_text, 5, h-5);
-                ctx.fillText(high_score, 65, h-5);
+                ctx.fillStyle = 'red';
+                ctx.fillText(score_text, 10, h-10);
+                ctx.fillText(high_score, 125, h-10);
+                ctx.font = "20px Arial";
             }
 
             //Lets first create a generic function to paint cells
