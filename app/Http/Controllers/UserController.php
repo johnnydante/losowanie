@@ -139,9 +139,9 @@ class UserController extends Controller
             } elseif($user->birthday == null) {
                 $intDiff = 444;
             }else {
-                $intDiff = 365 - date_diff(date_create(\Globals::getDateToDiff($user->birthday)),date_create(date('Y-m-d')))->days ;
+                $intDiff = 365 - date_diff(date_create(\Globals::getDateToDiff($user->birthday)),date_create(date('Y-m-d')))->days;
             }
-            if($user->daysToBirthday == 365) {
+            if($intDiff == 365) {
                 $user->daysToBirthday = 0;
             } else {
                 $user->daysToBirthday = $intDiff;
