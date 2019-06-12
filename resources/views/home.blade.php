@@ -64,7 +64,7 @@
 											@endif
 										</div>
 											@if(!Auth::user()->hasAllSuggestions())
-												<h5 style="margin-top: 40px; margin-bottom: 20px;">Możesz podać 3 podpowiedzi prezentu lub mniej dla osoby, która wylosuje Ciebie:</h5>
+												<h5 style="margin-top: 40px; margin-bottom: 20px;">Możesz podać 3 lub mniej podpowiedzi prezentu dla osoby, która wylosuje Ciebie:</h5>
 											@else
 											<h4 style="margin-top: 40px;">Twoje podpowiedzi to:</h4>
 											@endif
