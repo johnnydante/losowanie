@@ -35,11 +35,9 @@
 										@foreach($users as $key => $user)
 											<tr>
 												<td>{{ $user->name }}</td>
-												@if($user->name == 'Dawid')
-												@endif
 												<td class="birthday" style="color: {{ $user->birthday ? \Globals::getColorForBirthday($user->birthday) : 'black' }};">
                                                     {!! $user->birthday ?
-                                                        (\Globals::getDateToDiff($user->birthday) == date('Y-m-d') ?
+                                                        ((\Globals::getDateToDiff($user->birthday) == date('Y-m-d') && $user->daysToBirthday == 0) ?
                                                         '<b>TO DZISIAJ !</b>' :
                                                         '<b>'.\Globals::getBirthdayDate($user->birthday).'</b>') :
                                                     '<i>nie podano</i>'  !!} {{ $user->roles == 'child' ? \Globals::getChildrenAge($user->birthday) : '' }}
