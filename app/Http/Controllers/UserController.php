@@ -133,27 +133,23 @@ class UserController extends Controller
         $user->name = $request->get('name');
         $user->birthday = $request->get('birthday');
         $user->save();
+        $year = date('Y')+1;
         foreach (User::all() as $user) {
             if(\Globals::getDateToDiff($user->birthday) > date('Y-m-d')) {
                 $intDiff = date_diff(date_create(\Globals::getDateToDiff($user->birthday)),date_create(date('Y-m-d')))->days;
             } elseif($user->birthday == null) {
                 $intDiff = 444;
             }else {
-                $intDiff = 365 - date_diff(date_create(\Globals::getDateToDiff($user->birthday)),date_create(date('Y-m-d')))->days;
+                if($year % 4 == 0 && $year % 100 != 0 || $year % 400 == 0) {
+                    $intDiff = 366 - date_diff(date_create(\Globals::getDateToDiff($user->birthday)),date_create(date('Y-m-d')))->days;
+                } else {
+                    $intDiff = 365 - date_diff(date_create(\Globals::getDateToDiff($user->birthday)),date_create(date('Y-m-d')))->days;
+                }
             }
-            $year = date('Y')+1;
-            if($intDiff == 365) {
-                if ($year % 4 == 0 && $year % 100 != 0 || $year % 400 == 0) {
-                    $user->daysToBirthday = 365;
-                } else {
-                    $user->daysToBirthday = 0;
-                }
+            if(($intDiff == 365 AND !($year % 4 == 0 && $year % 100 != 0 || $year % 400 == 0)) OR ($intDiff == 366 AND ($year % 4 == 0 && $year % 100 != 0 || $year % 400 == 0))) {
+                $user->daysToBirthday = 0;
             } else {
-                if($intDiff == 1 AND ($year % 4 == 0 && $year % 100 != 0 || $year % 400 == 0)) {
-                    $user->daysToBirthday = 0;
-                } else {
-                    $user->daysToBirthday = $intDiff;
-                }
+                $user->daysToBirthday = $intDiff;
             }
             $user->save();
         }
