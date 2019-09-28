@@ -27,11 +27,10 @@ class BirthdayMailController extends Controller
                 foreach ($mailUsers as $user) {
                     Mail::to($user->email)->send(new Birthday($this->user->name));
                 }
-                dd('poszło');
+                Log::debug('Poszły maile o urudzinach uczestnika: '.$this->user->name);
             } catch (\Exception $e) {
                 Log::error($e->getMessage());
                 Log::error($e->getTraceAsString());
-                dd('nie poszło');
             }
         }
     }
