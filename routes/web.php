@@ -13,6 +13,8 @@
 
 Auth::routes();
 
+//Route::get('test', 'Cron\BirthdayMailController@send')->name('test');
+
 Route::middleware(['changePassword'])->group(function() {
     Route::get('/home', 'HomeController@index');
     Route::get('/', 'HomeController@index')->name('home');

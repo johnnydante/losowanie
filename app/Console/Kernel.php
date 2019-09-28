@@ -26,6 +26,9 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+        if (\Illuminate\Support\Facades\App::environment() == 'production') {
+            $schedule->call('App\Http\Controllers\Cron\BirthdayMailController@send')->dailyAt('09:00');
+        }
     }
 
     /**
