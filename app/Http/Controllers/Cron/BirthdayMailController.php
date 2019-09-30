@@ -13,8 +13,7 @@ class BirthdayMailController extends Controller
     protected $user = null;
 
     public function send() {
-//        $users = User::whereNotIn('roles',['child'])->get();
-        $users = User::where('role', 'superadmin')->get();
+        $users = User::all();
 
         foreach($users as $user) {
             if(\Globals::getDateToDiff($user->birthday) == date('Y-m-d')) {
@@ -22,9 +21,11 @@ class BirthdayMailController extends Controller
             }
         }
         if($this->user) {
-            $mailUsers = User::where('roles', '!=', 'child')
-                ->whereNotIn('name', [$this->user->name])
-                ->get();
+//            $mailUsers = User::where('roles', '!=', 'child')
+//                ->whereNotIn('name', [$this->user->name])
+//                ->get();
+
+            $mailUsers = User::where('role', 'superadmin')->get();
             try {
                 foreach ($mailUsers as $user) {
                     Mail::to($user->email)->send(new Birthday($this->user->name));
