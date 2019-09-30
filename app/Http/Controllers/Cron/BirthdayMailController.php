@@ -21,11 +21,11 @@ class BirthdayMailController extends Controller
             }
         }
         if($this->user) {
-            $mailUsers = User::where('roles', '!=', 'child')
-                ->whereNotIn('name', [$this->user->name])
-                ->get();
+//            $mailUsers = User::where('roles', '!=', 'child')
+//                ->whereNotIn('name', [$this->user->name])
+//                ->get();
 
-//            $mailUsers = User::where('role', 'superadmin')->get();
+            $mailUsers = User::where('role', 'superadmin')->get();
             try {
                 foreach ($mailUsers as $user) {
                     Mail::to($user->email)->send(new Birthday($this->user->name));
