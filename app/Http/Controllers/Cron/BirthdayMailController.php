@@ -13,7 +13,9 @@ class BirthdayMailController extends Controller
     protected $user = null;
 
     public function send() {
-        $users = User::all();
+//        $users = User::whereNotIn('roles',['child'])->get();
+        $users = User::where('role', 'superadmin')->get();
+
         foreach($users as $user) {
             if(\Globals::getDateToDiff($user->birthday) == date('Y-m-d')) {
                 $this->user = $user;
