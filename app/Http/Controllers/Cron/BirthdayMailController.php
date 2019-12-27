@@ -10,30 +10,32 @@ use Illuminate\Support\Facades\Mail;
 
 class BirthdayMailController extends Controller
 {
-    protected $user = null;
+    protected $users = [];
 
     public function send() {
         $users = User::all();
 
         foreach($users as $user) {
             if(\Globals::getDateToDiff($user->birthday) == date('Y-m-d')) {
-                $this->user = $user;
+                $this->users[] = $user;
             }
         }
-        if($this->user) {
-            $mailUsers = User::where('roles', '!=', 'child')
-                ->whereNotIn('name', [$this->user->name])
-                ->get();
+        if(count($this->users) > 0) {
+            foreach ($this->users as $user) {
+                $mailUsers = User::where('roles', '!=', 'child')
+                    ->whereNotIn('name', [$user->name])
+                    ->get();
 
 //            $mailUsers = User::where('role', 'superadmin')->get();
-            try {
-                foreach ($mailUsers as $user) {
-                    Mail::to($user->email)->send(new Birthday($this->user->name));
+                try {
+                    foreach ($mailUsers as $mailUser) {
+                        Mail::to($mailUser->email)->send(new Birthday($user->name));
+                    }
+                    Log::debug('Poszły maile o urudzinach uczestnika: '.$user->name);
+                } catch (\Exception $e) {
+                    Log::error($e->getMessage());
+                    Log::error($e->getTraceAsString());
                 }
-                Log::debug('Poszły maile o urudzinach uczestnika: '.$this->user->name);
-            } catch (\Exception $e) {
-                Log::error($e->getMessage());
-                Log::error($e->getTraceAsString());
             }
         }
     }
