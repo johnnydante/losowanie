@@ -125,6 +125,9 @@ class Globals
         $day = date("d",strtotime($date));
         $month = date("m",strtotime($date));
         $year = date('Y');
+        if(date('m-d', strtotime($date)) < date('m-d')) {
+            $year += 1;
+        }
         return $year.'-'.$month.'-'.$day;
     }
 
