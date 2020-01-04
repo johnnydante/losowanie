@@ -37,6 +37,8 @@ Route::middleware(['auth'])->group(function() {
                 Route::get('resetShuffle', 'AdminController@resetShuffle')->name('resetShuffle');
                 Route::get('sendMailPairs', 'AdminController@sendMailPairs')->name('sendMailPairs');
 
+                Route::post('saveHistory', 'AdminController@saveHistory')->name('saveHistory');
+
                 Route::get('supershuffle', 'AdminController@superShuffle')->name('superShuffle');
                 Route::middleware(['auth.superadmin'])->group(function () {
                     Route::get('doAdmin/{id}', 'AdminController@doAdmin')->name('doAdmin');
@@ -45,6 +47,7 @@ Route::middleware(['auth'])->group(function() {
             });
         });
         Route::get('users', 'UserController@users')->name('users');
+        Route::get('history', 'UserController@history')->name('history');
         Route::get('birthdays', 'UserController@birthdays')->name('birthdays');
         Route::get('getPair', 'UserController@getPair')->name('getPair');
         Route::post('suggest', 'UserController@postSuggestion')->name('postSuggestion');

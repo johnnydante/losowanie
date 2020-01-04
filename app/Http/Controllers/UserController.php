@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\History;
 use App\Http\Requests\DatasRequest;
 use App\Http\Requests\SuggestionRequest;
+use App\ShuffledPairs;
 use App\Suggestions;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\ChangePasswordRequest;
@@ -154,5 +157,11 @@ class UserController extends Controller
             $user->save();
         }
         return redirect()->route('myDatas')->with('success', 'Dane zostały poprawnie zmienione');
+    }
+
+    public function history() {
+        $years = History::orderBy('year', 'desc')->groupBy('year')->pluck('year');
+        return view('auth.history')
+            ->with('years',$years);
     }
 }

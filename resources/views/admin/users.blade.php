@@ -13,6 +13,9 @@
 										<button type="submit" class="btn btn-outline-primary" style="float: right; margin-right: 10px; margin-top: 3px;">Powrót</button>
 									</form>--}}
 								@if(Auth::user()->isAdmin())
+									<form action="{{ route('history') }}" method="get" style="float: right; margin-top: 3px;">
+										<button type="submit" class="btn btn-outline-dark" id="shuffle">Historia losowań</button>
+									</form>
 									<form action="{{ route('register') }}" method="get">
 										<button id="addUser" type="submit" class="btn btn-outline-success" style="float: right; margin-top: 3px;">Dodaj uczestnika</button>
 									</form>
