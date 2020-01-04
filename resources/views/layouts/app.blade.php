@@ -81,6 +81,11 @@
                                     </form>
                                 @endif
                             @endif
+                            @if(!Auth::user()->isAdmin())
+                                <form action="{{ route('history') }}" method="get" style="float: left; margin-left: 5px;">
+                                    <button type="submit" class="btn btn-outline-dark" id="history">Historia losowań</button>
+                                </form>
+                            @endif
                         </ul>
                         @if(Auth::user()->logged > 1)
                             <a  href="{{ route('logout') }}"  class="btn btn btn-outline-dark" style="float: left; max-height: 36px; min-width: 112px; margin-left: 5px;"

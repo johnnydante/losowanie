@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\History;
 use App\Http\Requests\ChangeBirthdayRequest;
 use App\Http\Requests\ChangeMailRequest;
 use App\Mail\Invitation;
@@ -213,5 +214,38 @@ class AdminController extends Controller
     public function showChildren() {
         $children = User::where('roles','child')->get();
         return view('admin.children', compact('children'));
+    }
+
+    public function saveHistory() {
+        if(date('m') == 12) {
+            $year = date('Y');
+        } else {
+            $year = date('Y')-1;
+        }
+        $pairs = ShuffledPairs::all();
+
+        if(History::where('year', $year)->first()) {
+            return redirect()->route('history')->with('danger', 'Losowanie z tego roku już jest zapisane');
+        }
+
+        try {
+            DB::beginTransaction();
+            foreach ($pairs as $pair) {
+                $history = new History();
+                $realPair = Crypt::decryptString($pair->Osoba_wylosowana);
+
+                $history->year = $year;
+                $history->name = $pair->Osoba_kupująca;
+                $history->pair = $realPair;
+                $history->save();
+            }
+            DB::commit();
+            return redirect()->route('history')->with('success', 'Poprawnie zapisano historię losowania');
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            Log::error($e->getTraceAsString());
+            DB::rollBack();
+        }
+        return redirect()->back()->with('danger','Wystąpił nieoczekiwany błąd. Spróbuj ponownie.');
     }
 }
