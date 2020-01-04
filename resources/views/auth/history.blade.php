@@ -12,7 +12,7 @@
 								<form action="{{ route('home') }}" method="get">
 									<button type="submit" class="btn btn-outline-primary" style="float: right; margin-top: 3px;">Powrót</button>
 								</form>
-								@if(Auth::user()->isAdmin())
+								@if(Auth::user()->isSuperAdmin())
 									<form action="{{ route('saveHistory') }}" method="post">
 										@csrf
 										<button id="save-history" type="submit" class="btn btn-outline-success" style="float: right; margin-top: 3px;">Zapisz aktualne losowanie</button>
