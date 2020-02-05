@@ -23,7 +23,7 @@ class BirthdayMailController extends Controller
         if(count($this->users) > 0) {
             foreach ($this->users as $user) {
                 $mailUsers = User::where('roles', '!=', 'child')
-                    ->whereNotIn('name', [$user->name, 'Darek', 'Magda'])
+                    ->whereNotIn('name', [$user->name, 'Dariusz', 'Magdalena'])
                     ->get();
 
 //            $mailUsers = User::where('role', 'superadmin')->get();
