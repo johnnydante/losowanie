@@ -188,6 +188,9 @@ class Globals
         if(\Globals::getDateToDiff($date) < date('Y-m-d')) {
             $nextBirthdayYear = date("Y") + 1;
         }
+        if(date('Y', strtotime(\Globals::getDateToDiff($date))) > date('Y')) {
+            $nextBirthdayYear = date("Y") + 1;
+        }
         $age = $nextBirthdayYear - $birthdayYear;
         switch ($age) {
             case 1:
