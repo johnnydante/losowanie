@@ -19,12 +19,12 @@ class UserController extends Controller
 {
 
     public function users() {
-        return view('admin.users')->with('users',User::where('roles', '!=', 'child')->get());
+        return view('admin.users')->with('users',User::whereIn('roles', ['superadmin', 'admin', 'user'])->get());
     }
 
     public function birthdays() {
         return view('birthdays')->with('users',User::orderBy('daysToBirthday')->get());
-    }   
+    }
 
     public function getPair() {
         $user = Auth::user();
@@ -77,7 +77,7 @@ class UserController extends Controller
         }
         return redirect()->route('home')->with('danger','Wystąpił nieoczekiwany błąd. Spróbuj ponownie.');
     }
-	
+
 	public function changeSuggestion($suggest) {
 		$user = Auth::user();
 		$oldSuggestion = DB::table('suggestions')->where('userId', $user->id)->first()->$suggest;
@@ -104,11 +104,11 @@ class UserController extends Controller
         }
 		return redirect()->route('home')->with('oldSuggestion', $oldSuggestion);
 	}
-	
+
 	public function changePasswordShow() {
 		return view('auth.changePassword');
 	}
-	
+
 	public function changePasswordPost(ChangePasswordRequest $request) {
 		$myPassword = Auth::user()->password;
 		if (Hash::check($request->get('oldPassword'), $myPassword)) {

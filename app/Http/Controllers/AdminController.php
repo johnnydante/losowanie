@@ -24,7 +24,7 @@ class AdminController extends Controller
 
     public function shuffle() {
         $arrNames =[];
-        foreach(User::where('roles', '!=', 'child')->get() as $user) {
+        foreach(User::whereIn('roles', ['superadmin', 'admin', 'user'])->get() as $user) {
             $arrNames[] = $user->name;
         }
         shuffle($arrNames);
@@ -97,7 +97,7 @@ class AdminController extends Controller
             DB::beginTransaction();
             ShuffledPairs::truncate();
             Suggestions::truncate();
-            foreach (User::where('roles', '!=', 'child')->get() as $user) {
+            foreach (User::whereIn('roles', '!=', 'child')->get() as $user) {
                 $user->hasTaken = 0;
                 $user->save();
             }
@@ -137,7 +137,7 @@ class AdminController extends Controller
 
             return redirect()->back()->with('success','Pomyślnie wysłano e-mail do tego uczestnika');
         }
-        foreach (User::where('roles', '!=', 'child')->get() as $user) {
+        foreach (User::whereIn('roles', ['superadmin', 'admin', 'user'])->get() as $user) {
             if($user->logged == null) {
                 Mail::to($user->email)->send(new Invitation());
             } else {
@@ -169,7 +169,7 @@ class AdminController extends Controller
 
     public function superShuffle() {
         $arrNames =[];
-        foreach(User::where('roles', '!=', 'child')->get() as $user) {
+        foreach(User::whereIn('roles', ['superadmin', 'admin', 'user'])->get() as $user) {
             $arrNames[] = $user->name;
         }
         shuffle($arrNames);
