@@ -73,7 +73,7 @@ class User extends Authenticatable
         $myPair = Crypt::decryptString($hashPair);
         return $myPair;
     }
-	
+
 	public function getUserIdByName($name) {
 		$id = DB::table('users')->where('name', $name)->first()->id;
 		return $id;
@@ -97,21 +97,21 @@ class User extends Authenticatable
     }
 
     public function hasFirstSuggestions() {
-        if($this->getSuggestions()['first']) {
+        if($this->getSuggestions() AND $this->getSuggestions()['first']) {
             return true;
         }
         return false;
     }
 
     public function hasSecondSuggestions() {
-        if($this->getSuggestions()['second']) {
+        if($this->getSuggestions() AND $this->getSuggestions()['second']) {
             return true;
         }
         return false;
     }
 
     public function hasThirdSuggestions() {
-        if($this->getSuggestions()['third']) {
+        if($this->getSuggestions() AND $this->getSuggestions()['third']) {
             return true;
         }
         return false;
