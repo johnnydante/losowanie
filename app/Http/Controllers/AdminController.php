@@ -29,13 +29,22 @@ class AdminController extends Controller
         }
         shuffle($arrNames);
         $pairs = [
-            'Magdalena' => 'Dariusz',
-            'Justyna' => 'Paweł',
-            'Barbara' => 'Edward',
-            'Beata' => 'Zbigniew',
-            'Zdzisław' => 'Grażyna',
-            'Damian' => 'Joanna'
+            ['Magdalena' => 'Dariusz'],
+            ['Justyna' => 'Paweł'],
+            ['Barbara' => 'Edward'],
+            ['Beata' => 'Zbigniew'],
+            ['Zdzisław' => 'Grażyna'],
+            ['Damian' => 'Joanna']
         ];
+
+        $lastYearHistory = History::select('name', 'pair')
+            ->where('year',date('Y')-1)
+            ->get()
+            ->toArray();
+        foreach ($lastYearHistory as $arrPair) {
+            $pairs[] = [$arrPair['name'] => $arrPair['pair']];
+        }
+
         $shufflePairs = [];
         $lostNames = [];
         for($i=0; $i<count($arrNames); $i++) {
@@ -43,7 +52,9 @@ class AdminController extends Controller
             do {
                 $chosenName = $this->getRandomName($arrNames);
                 $number = 0;
-                foreach($pairs as $name1 => $name2) {
+                foreach($pairs as $key => $arrPair) {
+                    $name1 = array_key_first($arrPair);
+                    $name2 = $arrPair[$name1];
                     if([$chosenName => $arrNames[$i]] == [$name1 => $name2] || [$chosenName => $arrNames[$i]] == [$name2 => $name1]) {
                         $number = 1;
                         continue;
@@ -97,7 +108,7 @@ class AdminController extends Controller
             DB::beginTransaction();
             ShuffledPairs::truncate();
             Suggestions::truncate();
-            foreach (User::whereIn('roles', '!=', 'child')->get() as $user) {
+            foreach (User::where('roles', '!=', 'child')->get() as $user) {
                 $user->hasTaken = 0;
                 $user->save();
             }
@@ -174,12 +185,22 @@ class AdminController extends Controller
         }
         shuffle($arrNames);
         $pairs = [
-            'Magdalena' => 'Dariusz',
-            'Justyna' => 'Paweł',
-            'Barbara' => 'Edward',
-            'Beata' => 'Zbigniew',
-            'Zdzisław' => 'Grażyna'
+            ['Magdalena' => 'Dariusz'],
+            ['Justyna' => 'Paweł'],
+            ['Barbara' => 'Edward'],
+            ['Beata' => 'Zbigniew'],
+            ['Zdzisław' => 'Grażyna'],
+            ['Damian' => 'Joanna']
         ];
+
+        $lastYearHistory = History::select('name', 'pair')
+            ->where('year',date('Y')-1)
+            ->get()
+            ->toArray();
+        foreach ($lastYearHistory as $arrPair) {
+            $pairs[] = [$arrPair['name'] => $arrPair['pair']];
+        }
+
         $shufflePairs = [];
         $lostNames = [];
         for($i=0; $i<count($arrNames); $i++) {
@@ -187,7 +208,9 @@ class AdminController extends Controller
             do {
                 $chosenName = $this->getRandomName($arrNames);
                 $number = 0;
-                foreach($pairs as $name1 => $name2) {
+                foreach($pairs as $key => $arrPair) {
+                    $name1 = array_key_first($arrPair);
+                    $name2 = $arrPair[$name1];
                     if([$chosenName => $arrNames[$i]] == [$name1 => $name2] || [$chosenName => $arrNames[$i]] == [$name2 => $name1]) {
                         $number = 1;
                         continue;
