@@ -23,58 +23,7 @@ class AdminController extends Controller
     }
 
     public function shuffle() {
-        $arrNames =[];
-        foreach(User::whereIn('roles', ['superadmin', 'admin', 'user'])->get() as $user) {
-            $arrNames[] = $user->name;
-        }
-        shuffle($arrNames);
-        $pairs = [
-            ['Magdalena' => 'Dariusz'],
-            ['Justyna' => 'Paweł'],
-            ['Barbara' => 'Edward'],
-            ['Beata' => 'Zbigniew'],
-            ['Zdzisław' => 'Grażyna'],
-            ['Damian' => 'Joanna']
-        ];
-
-        $lastYearHistory = History::select('name', 'pair')
-            ->where('year',date('Y')-1)
-            ->get()
-            ->toArray();
-        foreach ($lastYearHistory as $arrPair) {
-            $pairs[] = [$arrPair['name'] => $arrPair['pair']];
-        }
-
-        $shufflePairs = [];
-        $lostNames = [];
-        for($i=0; $i<count($arrNames); $i++) {
-            $intWhile = 0;
-            do {
-                $chosenName = $this->getRandomName($arrNames);
-                $number = 0;
-                foreach($pairs as $key => $arrPair) {
-                    $name1 = array_key_first($arrPair);
-                    $name2 = $arrPair[$name1];
-                    if([$chosenName => $arrNames[$i]] == [$name1 => $name2] || [$chosenName => $arrNames[$i]] == [$name2 => $name1]) {
-                        $number = 1;
-                        continue;
-                    }
-                }
-                $intWhile++;
-                if($intWhile > 2.5*count($arrNames)) {
-                    break;
-                }
-            } while($chosenName == $arrNames[$i] || in_array($chosenName,$lostNames) || $number == 1);
-            if($intWhile > 2.5*count($arrNames)) {
-                break;
-            }
-            $shufflePairs[$arrNames[$i]] = $chosenName;
-            $lostNames[] = $shufflePairs[$arrNames[$i]];
-        }
-        if(count($shufflePairs) != count($arrNames) ) {
-            return redirect(\Request::url());
-        }
-
+        $shufflePairs = $this->shufflePairsToLottery();
         try {
             DB::beginTransaction();
             ShuffledPairs::truncate();
@@ -99,8 +48,7 @@ class AdminController extends Controller
     }
 
     public function getRandomName($arrNames) {
-        $nameToBuy = $arrNames[rand(0, count($arrNames)-1)];
-            return $nameToBuy;
+        return $arrNames[rand(0, count($arrNames)-1)];
     }
 
     public function resetShuffle() {
@@ -178,21 +126,41 @@ class AdminController extends Controller
         return redirect()->route('users')->with('success','Pomyślnie usunięto użytkownikowi rolę admina');
     }
 
-    public function superShuffle() {
-        $arrNames =[];
-        foreach(User::whereIn('roles', ['superadmin', 'admin', 'user'])->get() as $user) {
-            $arrNames[] = $user->name;
+    public function checkPair($name, $chosenName, $pairs) {
+        if($name == $chosenName) {
+            return false;
         }
-        shuffle($arrNames);
+
+        $myPairs = [];
+        foreach ($pairs as $arrPair) {
+            if(isset($arrPair[$name])) {
+                $myPairs[] = $arrPair;
+            }
+        }
+
+        foreach ($myPairs as $arrPair) {
+            if($arrPair[$name] == $chosenName) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public function shufflePairsToLottery() {
         $pairs = [
             ['Magdalena' => 'Dariusz'],
             ['Justyna' => 'Paweł'],
             ['Barbara' => 'Edward'],
             ['Beata' => 'Zbigniew'],
             ['Zdzisław' => 'Grażyna'],
-            ['Damian' => 'Joanna']
+            ['Damian' => 'Joanna'],
+            ['Dariusz' => 'Magdalena'],
+            ['Paweł' => 'Justyna'],
+            ['Edward' => 'Barbara'],
+            ['Zbigniew' => 'Beata'],
+            ['Grażyna' => 'Zdzisław'],
+            ['Joanna' => 'Damian']
         ];
-
         $lastYearHistory = History::select('name', 'pair')
             ->where('year',date('Y')-1)
             ->get()
@@ -201,36 +169,44 @@ class AdminController extends Controller
             $pairs[] = [$arrPair['name'] => $arrPair['pair']];
         }
 
+        $arrNames =[];
+        foreach(User::whereIn('roles', ['superadmin', 'admin', 'user'])->get() as $user) {
+            $arrNames[] = $user->name;
+        }
+        $arrReturn = [];
         $shufflePairs = [];
-        $lostNames = [];
-        for($i=0; $i<count($arrNames); $i++) {
-            $intWhile = 0;
-            do {
-                $chosenName = $this->getRandomName($arrNames);
-                $number = 0;
-                foreach($pairs as $key => $arrPair) {
-                    $name1 = array_key_first($arrPair);
-                    $name2 = $arrPair[$name1];
-                    if([$chosenName => $arrNames[$i]] == [$name1 => $name2] || [$chosenName => $arrNames[$i]] == [$name2 => $name1]) {
-                        $number = 1;
-                        continue;
+        for($q=0; $q<10;$q++) {
+            $shufflePairs = [];
+            $lostNames = $arrNames;
+            for($i=0; $i<count($arrNames); $i++) {
+                $intWhile = 0;
+                do {
+                    $chosenName = $this->getRandomName($lostNames);
+                    $intWhile++;
+                    if($intWhile > 1000){
+                        continue 3;
                     }
+                } while (!$this->checkPair($arrNames[$i], $chosenName, $pairs));
+                $shufflePairs[$arrNames[$i]] = $chosenName;
+                if (($key = array_search($chosenName, $lostNames)) !== false) {
+                    unset($lostNames[$key]);
                 }
-                $intWhile++;
-                if($intWhile > 2.5*count($arrNames)) {
-                    break;
-                }
-            } while($chosenName == $arrNames[$i] || in_array($chosenName,$lostNames) || $number == 1);
-            if($intWhile > 2.5*count($arrNames)) {
-                break;
+                $lostNames = array_values($lostNames);
             }
-            $shufflePairs[$arrNames[$i]] = $chosenName;
-            $lostNames[] = $shufflePairs[$arrNames[$i]];
-        }
-        if(count($shufflePairs) != count($arrNames) ) {
-            return redirect(\Request::url());
-        }
 
+            foreach ($shufflePairs as $name => $chosenName){
+                if(isset($arrReturn[$name][$chosenName])){
+                    $arrReturn[$name][$chosenName]++;
+                }else {
+                    $arrReturn[$name][$chosenName] = 1;
+                }
+            }
+        }
+        return $shufflePairs;
+    }
+
+    public function superShuffle() {
+        $shufflePairs = $this->shufflePairsToLottery();
         dd($shufflePairs);
     }
 
